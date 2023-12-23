@@ -6,8 +6,8 @@ public class MoveTileScript : MonoBehaviour
 {
     public GameManager gmManager;
 
-    private int _xPos;
-    private int _yPos;
+    [SerializeField]private int _xPos;
+    [SerializeField]private int _yPos;
 
     public void Start()
     {
@@ -37,6 +37,9 @@ public class MoveTileScript : MonoBehaviour
             gmManager.gameBoard[pastXPos, pastYPos] = null;
 
             gmManager.heroes[gmManager.currentHero].transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 2f);
+
+            Debug.Log(_xPos + "" + _yPos);
+
             hsScript.SetCoords(_xPos, _yPos);
             gmManager.gameBoard[_xPos, _yPos] = gmManager.heroes[gmManager.currentHero];
         }
@@ -44,5 +47,10 @@ public class MoveTileScript : MonoBehaviour
         gmManager.canMove = false;
 
         gmManager.EndTurn();
+    }
+
+    public void ShowCoords()
+    {
+        Debug.Log(_xPos + " " +  _yPos);
     }
 }

@@ -40,9 +40,11 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < 4; i++)
         {
-            heroes[i].GetComponent<HeroScript>().SetCoords(7, i);
-            gameBoard[7, i] = heroes[i];
-            heroes[i].transform.position = new Vector3(tiles[7, i].transform.position.x, tiles[7, i].transform.position.y, tiles[7, i].transform.position.z - 1f);
+            int linePos = 3;
+            int colPos = i + 1;
+            heroes[i].GetComponent<HeroScript>().SetCoords(linePos, colPos);
+            gameBoard[linePos, colPos] = heroes[i];
+            heroes[i].transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
         }
 
         GenerateMoveTiles();
@@ -113,6 +115,8 @@ public class GameManager : MonoBehaviour
             int newXPos = startingXPos + lineChange[i];
             int newYPos = startingYPos + colChange[i];
 
+            //Debug.Log(newXPos + " " + newYPos);
+
             if (newXPos < 0 || newXPos > 7 || newYPos < 0 || newYPos > 7)
             {
                 continue;
@@ -120,16 +124,18 @@ public class GameManager : MonoBehaviour
 
             if (gameBoard[newXPos, newYPos] != null)
             {
-                Debug.Log(gameBoard[newXPos, newYPos].name);
                 continue;
             }
 
 
-            Vector3 tilePosition = tiles[newXPos, newYPos].transform.position; 
+            Vector3 tilePosition = tiles[newXPos, newYPos].transform.position;
             tilePosition -= new Vector3(0, 0, 1);
 
-            Instantiate(_moveTile, tilePosition, Quaternion.identity);
+            //Debug.Log(newXPos + " " + newYPos);
             _moveTile.GetComponent<MoveTileScript>().SetCoords(newXPos, newYPos);
+            //_moveTile.GetComponent<MoveTileScript>().ShowCoords();
+
+            Instantiate(_moveTile, tilePosition, Quaternion.identity);
         }
     }
 
