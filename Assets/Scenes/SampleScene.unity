@@ -499,6 +499,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2980850197263782883, guid: 2292ca9f6a0a27842ab2aa8a3ca62940, type: 3}
+      propertyPath: _movementType
+      value: fast
+      objectReference: {fileID: 0}
     - target: {fileID: 5054014923702609163, guid: 2292ca9f6a0a27842ab2aa8a3ca62940, type: 3}
       propertyPath: m_Name
       value: Rogue

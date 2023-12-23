@@ -38,8 +38,6 @@ public class MoveTileScript : MonoBehaviour
 
             gmManager.heroes[gmManager.currentHero].transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 2f);
 
-            Debug.Log(_xPos + "" + _yPos);
-
             hsScript.SetCoords(_xPos, _yPos);
             gmManager.gameBoard[_xPos, _yPos] = gmManager.heroes[gmManager.currentHero];
         }

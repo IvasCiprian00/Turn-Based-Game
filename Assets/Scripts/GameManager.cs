@@ -84,14 +84,21 @@ public class GameManager : MonoBehaviour
     {
         HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
         string mvmt = hsScript.GetMovementType();
-
+        int[] lineVector;
+        int[] colVector;
         switch (mvmt)
         {
             case "basic":
-                SpawnBasicTiles();
+                lineVector = new int[8]{ -1, -1, -1, 0, 1, 1, 1, 0 };
+                colVector = new int[8] { -1, 0, 1, 1, 1, 0, -1, -1 };
+
+                SpawnBasicTiles(lineVector, colVector);
                 break;
             case "fast":
-                SpawnFastTiles();
+                lineVector = new int[12] { -1, -1, -1, 0, 1, 1, 1, 0 , -2, 0, 2, 0};
+                colVector = new int[12] { -1, 0, 1, 1, 1, 0, -1, -1 ,0 , 2, 0, -2};
+
+                SpawnBasicTiles(lineVector, colVector);
                 break;
             case "teleport":
                 SpawnTeleportTiles();
@@ -100,15 +107,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnBasicTiles()
+    public void SpawnBasicTiles(int[] lineChange, int[] colChange)
     {
         HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
 
         int startingXPos = hsScript.GetXPos();
         int startingYPos = hsScript.GetYPos();
-
-        int[] lineChange = {-1, -1, -1, 0, 1, 1, 1, 0};
-        int[] colChange = {-1, 0, 1, 1, 1, 0, -1, -1};
 
         for(int i = 0; i < lineChange.Length; i++) 
         {
@@ -131,11 +135,9 @@ public class GameManager : MonoBehaviour
             Vector3 tilePosition = tiles[newXPos, newYPos].transform.position;
             tilePosition -= new Vector3(0, 0, 1);
 
-            //Debug.Log(newXPos + " " + newYPos);
-            _moveTile.GetComponent<MoveTileScript>().SetCoords(newXPos, newYPos);
-            //_moveTile.GetComponent<MoveTileScript>().ShowCoords();
+            GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity);// without reference, the moveplates don't work correctly
+            reference.GetComponent<MoveTileScript>().SetCoords(newXPos, newYPos);
 
-            Instantiate(_moveTile, tilePosition, Quaternion.identity);
         }
     }
 

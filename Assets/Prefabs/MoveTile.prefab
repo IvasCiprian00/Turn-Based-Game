@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gmManager: {fileID: 0}
-  _xPos: 0
-  _yPos: 0
+  _xPos: 2
+  _yPos: 2
