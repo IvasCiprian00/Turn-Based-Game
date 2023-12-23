@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HeroScript : MonoBehaviour
 {
-    private int _xPos;
-    private int _yPos;
+    [SerializeField] private int _xPos;
+    [SerializeField] private int _yPos;
 
     [SerializeField]
     private string _movementType;

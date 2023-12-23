@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
             currentHero = 0;
         }
 
-        //GenerateMoveTiles();
+        GenerateMoveTiles();
     }
 
     public void GenerateMoveTiles()
@@ -118,10 +118,12 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            if (gameBoard[newXPos, newYPos] != null) 
+            if (gameBoard[newXPos, newYPos] != null)
             {
+                Debug.Log(gameBoard[newXPos, newYPos].name);
                 continue;
             }
+
 
             Vector3 tilePosition = tiles[newXPos, newYPos].transform.position; 
             tilePosition -= new Vector3(0, 0, 1);

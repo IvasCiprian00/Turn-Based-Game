@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 246881427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.7925661}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,7 +299,7 @@ MonoBehaviour:
   currentHero: 0
   canMove: 1
   _tile: {fileID: 7431743534758461160, guid: 8c523363f90489949b071798dba1a71b, type: 3}
-  _moveTile: {fileID: 5386742443763533029, guid: 0568af0fca28b674fbaa5db06edcb484, type: 3}
+  _moveTile: {fileID: 8632503691723713813, guid: 0568af0fca28b674fbaa5db06edcb484, type: 3}
 --- !u!4 &1853569550
 Transform:
   m_ObjectHideFlags: 0
