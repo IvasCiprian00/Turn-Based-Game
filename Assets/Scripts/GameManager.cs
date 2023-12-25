@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public bool canMove = true;
 
     private int numberOfLines = 8;
-    private int numberOfColumns = 8;
+    private int numberOfColumns = 6;
 
     private bool _attacking = false;
 
@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         float xPos = -2.33f;
-        float yPos = 1f;
-        float positionIncrement = 0.66f;
+        float yPos = 3f;
+        float positionIncrement = 0.93f;
 
         tiles = new GameObject[numberOfLines, numberOfColumns];
         gameBoard = new GameObject[numberOfLines, numberOfColumns];

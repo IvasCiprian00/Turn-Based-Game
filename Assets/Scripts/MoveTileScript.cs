@@ -27,7 +27,8 @@ public class MoveTileScript : MonoBehaviour
     {
         if (_attackTile)
         {
-            Debug.Log("Attacked");
+            int damageDealt = gmManager.heroes[gmManager.currentHero].GetComponent<HeroScript>().GetDamage();
+            gmManager.gameBoard[_xPos, _yPos].GetComponent<EnemyScript>().TakeDamage(damageDealt);
 
             gmManager.canMove = false;
 
