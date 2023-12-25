@@ -290,6 +290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8654e3d8d36a448f149cf35e7282d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tile: {fileID: 7431743534758461160, guid: 8c523363f90489949b071798dba1a71b, type: 3}
+  _moveTile: {fileID: 8632503691723713813, guid: 0568af0fca28b674fbaa5db06edcb484, type: 3}
+  _dummy: {fileID: 4229422040891881825, guid: 5c7a2a0f7acf44748be73a64bb49c02c, type: 3}
   heroes:
   - {fileID: 929095068}
   - {fileID: 1565210866}
@@ -298,8 +301,6 @@ MonoBehaviour:
   numberOfHeroes: 4
   currentHero: 0
   canMove: 1
-  _tile: {fileID: 7431743534758461160, guid: 8c523363f90489949b071798dba1a71b, type: 3}
-  _moveTile: {fileID: 8632503691723713813, guid: 0568af0fca28b674fbaa5db06edcb484, type: 3}
 --- !u!4 &1853569550
 Transform:
   m_ObjectHideFlags: 0

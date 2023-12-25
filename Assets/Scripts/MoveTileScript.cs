@@ -5,6 +5,9 @@ using UnityEngine;
 public class MoveTileScript : MonoBehaviour
 {
     public GameManager gmManager;
+    private bool _attackTile;
+
+    [SerializeField] private Sprite _attackTileSprite;
 
     [SerializeField]private int _xPos;
     [SerializeField]private int _yPos;
@@ -22,11 +25,16 @@ public class MoveTileScript : MonoBehaviour
 
     public void OnMouseUp()
     {
-        /*if (gmManager.gameBoard[_xPos, _yPos] != null || gmManager.gameBoard[_xPos, _yPos].tag != "Move Tile")
+        if (_attackTile)
         {
-            Debug.Log(gmManager.gameBoard[_xPos, _yPos].name);
+            Debug.Log("Attacked");
+
+            gmManager.canMove = false;
+
+            gmManager.EndTurn();
+
             return;
-        }*/
+        }
 
         if (gmManager.canMove)
         {
@@ -50,5 +58,15 @@ public class MoveTileScript : MonoBehaviour
     public void ShowCoords()
     {
         Debug.Log(_xPos + " " +  _yPos);
+    }
+
+    public void SetAttacking(bool attacking)
+    {
+        if(attacking)
+        {
+            GetComponent<SpriteRenderer>().sprite = _attackTileSprite;
+        }
+
+        _attackTile = attacking;
     }
 }

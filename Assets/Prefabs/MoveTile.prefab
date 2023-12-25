@@ -144,5 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gmManager: {fileID: 0}
+  _attackTileSprite: {fileID: 21300000, guid: 79e35467fff35a64c958b6d017d23a32, type: 3}
   _xPos: 2
   _yPos: 2
