@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         float xPos = -2.33f;
         float yPos = 3f;
-        float positionIncrement = 0.93f;
+        float positionIncrement = 0.932f;
 
         tiles = new GameObject[numberOfLines, numberOfColumns];
         gameBoard = new GameObject[numberOfLines, numberOfColumns];
@@ -98,21 +98,23 @@ public class GameManager : MonoBehaviour
     {
         HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
         string mvmt = hsScript.GetMovementType();
-        int[] lineVector;
-        int[] colVector;
+        //int[] lineVector;
+        //int[] colVector;
         switch (mvmt)
         {
             case "basic":
-                lineVector = new int[8]{ -1, -1, -1, 0, 1, 1, 1, 0 };
-                colVector = new int[8] { -1, 0, 1, 1, 1, 0, -1, -1 };
+                //lineVector = new int[8]{ -1, -1, -1, 0, 1, 1, 1, 0 };
+                //colVector = new int[8] { -1, 0, 1, 1, 1, 0, -1, -1 };
 
-                SpawnBasicTiles(lineVector, colVector);
+                //SpawnBasicTiles(lineVector, colVector);
+                SpawnBasicTiles(1);
                 break;
             case "fast":
-                lineVector = new int[12] { -1, -1, -1, 0, 1, 1, 1, 0 , -2, 0, 2, 0};
-                colVector = new int[12] { -1, 0, 1, 1, 1, 0, -1, -1 ,0 , 2, 0, -2};
+                //lineVector = new int[12] { -1, -1, -1, 0, 1, 1, 1, 0 , -2, 0, 2, 0};
+                //colVector = new int[12] { -1, 0, 1, 1, 1, 0, -1, -1 ,0 , 2, 0, -2};
 
-                SpawnBasicTiles(lineVector, colVector);
+                //SpawnBasicTiles(lineVector, colVector);
+                SpawnBasicTiles(2);
                 break;
             case "teleport":
                 SpawnTeleportTiles();
@@ -160,6 +162,55 @@ public class GameManager : MonoBehaviour
             GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity);// without reference, the moveplates don't work correctly
             reference.GetComponent<MoveTileScript>().SetCoords(newXPos, newYPos);
             reference.GetComponent<MoveTileScript>().SetAttacking(_attacking);
+        }
+    }
+
+    public void SpawnBasicTiles(int speed)
+    {
+        HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
+
+        int firstLine = hsScript.GetXPos() - speed;
+        int firstCol = hsScript.GetYPos() - speed;
+
+        int lastLine = hsScript.GetXPos() + speed;
+        int lastCol = hsScript.GetYPos() + speed;
+
+        for (int i = firstLine; i <= lastLine; i++)
+        {
+            for(int j = firstCol; j <= lastCol; j++)
+            {
+                Debug.Log(i + " " + j);
+                _attacking = false;
+
+                if(i < 0 || j < 0 || i > numberOfLines - 1 || j > numberOfColumns - 1)
+                {
+                    continue;
+                }
+
+                if(Mathf.Abs(hsScript.GetXPos() - i) + Mathf.Abs(hsScript.GetYPos() - j) > speed)
+                {
+                    continue;
+                }
+
+                if (gameBoard[i, j] != null)
+                {
+                    if (gameBoard[i, j].tag == "Enemy")
+                    {
+                        _attacking = true;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                Vector3 tilePosition = tiles[i, j].transform.position;
+                tilePosition -= new Vector3(0, 0, 1);
+
+                GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity);   // without reference, the moveplates don't work correctly
+                reference.GetComponent<MoveTileScript>().SetCoords(i, j);
+                reference.GetComponent<MoveTileScript>().SetAttacking(_attacking);
+            }
         }
     }
 

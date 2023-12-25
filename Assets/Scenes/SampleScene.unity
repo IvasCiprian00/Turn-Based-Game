@@ -329,6 +329,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1235508793132936623, guid: fe275da4dab6e0448a13b916a3f19fcf, type: 3}
+      propertyPath: _damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2134805830491350466, guid: fe275da4dab6e0448a13b916a3f19fcf, type: 3}
       propertyPath: m_Name
       value: Mage
@@ -386,6 +390,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5368155518550809032, guid: 555e2e8787c537949aa9cc101b21d266, type: 3}
+      propertyPath: _damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1735940978811420371, guid: 555e2e8787c537949aa9cc101b21d266, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.34
@@ -443,6 +451,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1416725699389140328, guid: 3ec0b093e44223a4794e9a1aa9db8420, type: 3}
+      propertyPath: _damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 441293642663218218, guid: 3ec0b093e44223a4794e9a1aa9db8420, type: 3}
       propertyPath: m_Name
       value: Healer
@@ -500,6 +512,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2980850197263782883, guid: 2292ca9f6a0a27842ab2aa8a3ca62940, type: 3}
+      propertyPath: _damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2980850197263782883, guid: 2292ca9f6a0a27842ab2aa8a3ca62940, type: 3}
       propertyPath: _movementType
       value: fast
