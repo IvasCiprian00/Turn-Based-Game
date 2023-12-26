@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public int speedLeft;
     public bool canMove = true;
     public HeroScript hsScript;
+    [SerializeField] private GameObject _selectedEffect;
+    private GameObject _effectReference;
 
     private int numberOfLines = 8;
     private int numberOfColumns = 6;
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+        _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
         InitializeBoardElements();
@@ -38,6 +41,8 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+        _effectReference.transform.position = heroes[currentHero].transform.position;
+
         if (speedLeft <= 0)
         {
             canMove = false;

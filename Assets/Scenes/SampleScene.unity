@@ -619,6 +619,7 @@ MonoBehaviour:
   speedLeft: 0
   canMove: 1
   hsScript: {fileID: 0}
+  _selectedEffect: {fileID: 1964376638117116823, guid: 0eb1efae59a4f2f43be6c9897dafc627, type: 3}
 --- !u!4 &1853569550
 Transform:
   m_ObjectHideFlags: 0
