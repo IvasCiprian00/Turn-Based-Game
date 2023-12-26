@@ -25,23 +25,24 @@ public class MoveTileScript : MonoBehaviour
 
     public void OnMouseUp()
     {
-        if (_attackTile)
-        {
-            int damageDealt = gmManager.heroes[gmManager.currentHero].GetComponent<HeroScript>().GetDamage();
-            gmManager.gameBoard[_xPos, _yPos].GetComponent<EnemyScript>().TakeDamage(damageDealt);
-
-            gmManager.canMove = false;
-
-            gmManager.EndTurn();
-
-            return;
-        }
-
         if (gmManager.canMove)
         {
             HeroScript hsScript = gmManager.heroes[gmManager.currentHero].GetComponent<HeroScript>();
             int pastXPos = hsScript.GetXPos();
             int pastYPos = hsScript.GetYPos();
+
+            gmManager.speedLeft -= Mathf.Abs(_xPos - pastXPos) + Mathf.Abs(_yPos - pastYPos);
+
+            if (_attackTile)
+            {
+                int damageDealt = hsScript.GetDamage();
+
+                gmManager.gameBoard[_xPos, _yPos].GetComponent<EnemyScript>().TakeDamage(damageDealt);
+
+                gmManager.GenerateMoveTiles();
+
+                return;
+            }
 
             gmManager.gameBoard[pastXPos, pastYPos] = null;
 
@@ -49,11 +50,8 @@ public class MoveTileScript : MonoBehaviour
 
             hsScript.SetCoords(_xPos, _yPos);
             gmManager.gameBoard[_xPos, _yPos] = gmManager.heroes[gmManager.currentHero];
+            gmManager.GenerateMoveTiles();
         }
-
-        gmManager.canMove = false;
-
-        gmManager.EndTurn();
     }
 
     public void ShowCoords()

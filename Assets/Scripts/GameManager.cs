@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
     public GameObject[] heroes;
     public int numberOfHeroes;
     public int currentHero;
+    public int speedLeft;
     public bool canMove = true;
+    public HeroScript hsScript;
 
     private int numberOfLines = 8;
     private int numberOfColumns = 6;
@@ -27,29 +29,28 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        float xPos = -2.33f;
-        float yPos = 3f;
-        float positionIncrement = 0.932f;
+        GenerateGameBoard(numberOfLines, numberOfColumns);
 
-        tiles = new GameObject[numberOfLines, numberOfColumns];
-        gameBoard = new GameObject[numberOfLines, numberOfColumns];
+        InitializeBoardElements();
 
-        for (int i = 0; i < numberOfLines; i++)
+        GenerateMoveTiles();
+    }
+
+    public void Update()
+    {
+        if (speedLeft <= 0)
         {
-            xPos = -2.33f;
-
-            for(int j = 0; j < numberOfColumns; j++)
-            {
-                tiles[i, j] = Instantiate(_tile, new Vector3(xPos, yPos, -1), Quaternion.identity, GameObject.Find("Tile Container").transform);
-                tiles[i, j].GetComponent<TileScript>().SetCoords(i, j);
-
-                xPos += positionIncrement;
-            }
-
-            yPos -= positionIncrement;
+            canMove = false;
         }
+        else
+        {
+            canMove = true;
+        }
+    }
 
-        for(int i = 0; i < 4; i++)
+    private void InitializeBoardElements()
+    {
+        for (int i = 0; i < 4; i++)
         {
             int linePos = 5;
             int colPos = i + 1;
@@ -59,20 +60,46 @@ public class GameManager : MonoBehaviour
             heroes[i].transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
         }
 
-        gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
+        speedLeft = heroes[currentHero].GetComponent<HeroScript>().GetSpeed();
 
-        GenerateMoveTiles();
+        gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
+    }
+
+    private void GenerateGameBoard(int sizeX, int sizeY)
+    {
+        float xPos = -2.33f;
+        float yPos = 3f;
+        float positionIncrement = 0.932f;
+
+        tiles = new GameObject[sizeX, sizeY];
+        gameBoard = new GameObject[sizeX, sizeY];
+
+        for (int i = 0; i < sizeX; i++)
+        {
+            xPos = -2.33f;
+
+            for (int j = 0; j < sizeY; j++)
+            {
+                tiles[i, j] = Instantiate(_tile, new Vector3(xPos, yPos, -1), Quaternion.identity, GameObject.Find("Tile Container").transform);
+                tiles[i, j].GetComponent<TileScript>().SetCoords(i, j);
+
+                xPos += positionIncrement;
+            }
+
+            yPos -= positionIncrement;
+        }
     }
 
     public void EndTurn()
     {
         currentHero++;
-        canMove = true;
 
         if(currentHero >= numberOfHeroes)
         {
             currentHero = 0;
         }
+
+        speedLeft = heroes[currentHero].GetComponent<HeroScript>().GetSpeed();
 
         GenerateMoveTiles();
     }
@@ -98,70 +125,19 @@ public class GameManager : MonoBehaviour
     {
         HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
         string mvmt = hsScript.GetMovementType();
-        //int[] lineVector;
-        //int[] colVector;
+
         switch (mvmt)
         {
             case "basic":
-                //lineVector = new int[8]{ -1, -1, -1, 0, 1, 1, 1, 0 };
-                //colVector = new int[8] { -1, 0, 1, 1, 1, 0, -1, -1 };
-
-                //SpawnBasicTiles(lineVector, colVector);
-                SpawnBasicTiles(1);
+                SpawnBasicTiles(speedLeft);
                 break;
             case "fast":
-                //lineVector = new int[12] { -1, -1, -1, 0, 1, 1, 1, 0 , -2, 0, 2, 0};
-                //colVector = new int[12] { -1, 0, 1, 1, 1, 0, -1, -1 ,0 , 2, 0, -2};
-
-                //SpawnBasicTiles(lineVector, colVector);
                 SpawnBasicTiles(2);
                 break;
             case "teleport":
                 SpawnTeleportTiles();
                 break;
             default: break;
-        }
-    }
-
-    public void SpawnBasicTiles(int[] lineChange, int[] colChange)
-    {
-        HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
-
-        int startingXPos = hsScript.GetXPos();
-        int startingYPos = hsScript.GetYPos();
-
-        for(int i = 0; i < lineChange.Length; i++) 
-        {
-            int newXPos = startingXPos + lineChange[i];
-            int newYPos = startingYPos + colChange[i];
-
-            _attacking = false;
-
-            //Debug.Log(newXPos + " " + newYPos);
-
-            if (newXPos < 0 || newXPos > numberOfLines - 1 || newYPos < 0 || newYPos > numberOfColumns - 1)
-            {
-                continue;
-            }
-
-            if (gameBoard[newXPos, newYPos] != null)
-            {
-                if (gameBoard[newXPos, newYPos].tag == "Enemy")
-                {
-                    _attacking = true;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            Vector3 tilePosition = tiles[newXPos, newYPos].transform.position;
-            tilePosition -= new Vector3(0, 0, 1);
-
-            GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity);// without reference, the moveplates don't work correctly
-            reference.GetComponent<MoveTileScript>().SetCoords(newXPos, newYPos);
-            reference.GetComponent<MoveTileScript>().SetAttacking(_attacking);
         }
     }
 
@@ -179,7 +155,6 @@ public class GameManager : MonoBehaviour
         {
             for(int j = firstCol; j <= lastCol; j++)
             {
-                Debug.Log(i + " " + j);
                 _attacking = false;
 
                 if(i < 0 || j < 0 || i > numberOfLines - 1 || j > numberOfColumns - 1)
@@ -210,6 +185,8 @@ public class GameManager : MonoBehaviour
                 GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity);   // without reference, the moveplates don't work correctly
                 reference.GetComponent<MoveTileScript>().SetCoords(i, j);
                 reference.GetComponent<MoveTileScript>().SetAttacking(_attacking);
+
+                // ADD A BUTTON TO END TURN AND DECREASE SPEED AFTER MOVING
             }
         }
     }
