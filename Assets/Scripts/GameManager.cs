@@ -60,7 +60,8 @@ public class GameManager : MonoBehaviour
             heroes[i].transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
         }
 
-        speedLeft = heroes[currentHero].GetComponent<HeroScript>().GetSpeed();
+        hsScript = heroes[currentHero].GetComponent<HeroScript>();
+        speedLeft = hsScript.GetSpeed();
 
         gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
     }
@@ -99,7 +100,8 @@ public class GameManager : MonoBehaviour
             currentHero = 0;
         }
 
-        speedLeft = heroes[currentHero].GetComponent<HeroScript>().GetSpeed();
+        hsScript = heroes[currentHero].GetComponent<HeroScript>();
+        speedLeft = hsScript.GetSpeed();
 
         GenerateMoveTiles();
     }
@@ -123,7 +125,6 @@ public class GameManager : MonoBehaviour
 
     public void CreateMoveTiles()
     {
-        HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
         string mvmt = hsScript.GetMovementType();
 
         switch (mvmt)
@@ -143,8 +144,6 @@ public class GameManager : MonoBehaviour
 
     public void SpawnBasicTiles(int speed)
     {
-        HeroScript hsScript = heroes[currentHero].GetComponent<HeroScript>();
-
         int firstLine = hsScript.GetXPos() - speed;
         int firstCol = hsScript.GetYPos() - speed;
 
