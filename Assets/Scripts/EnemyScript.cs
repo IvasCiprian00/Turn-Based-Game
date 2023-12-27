@@ -63,6 +63,9 @@ public class EnemyScript : MonoBehaviour
 
     public void MoveTowards()
     {
+        int pastXPos = _xPos;
+        int pastYPos = _yPos;
+
         if(_xPos <  _hsScript.GetXPos())
         {
             _xPos++;
@@ -79,9 +82,18 @@ public class EnemyScript : MonoBehaviour
         {
             _yPos--;
         }
+
+        UpdatePosition(pastXPos, pastYPos);
     }
 
-    private bool CanAttack(HeroScript targetScript)
+    public void UpdatePosition(int x, int y)
+    {
+        transform.position = _gmManager.tiles[_xPos, _yPos].transform.position;
+        _gmManager.gameBoard[x, y] = null;
+        _gmManager.gameBoard[_xPos, _yPos] = gameObject;
+    }
+
+    public bool CanAttack(HeroScript targetScript)
     {
         Debug.Log(GetDistance(_xPos, targetScript.GetXPos(), _yPos, targetScript.GetYPos()));
 
