@@ -17,6 +17,12 @@ public class HeroScript : MonoBehaviour
 
     public GameManager gmManager;
 
+    public void TakeDamage(int damage)
+    {
+        _hp -= damage;
+        Debug.Log("Attacked");
+    }
+
     public void SetCoords(int x, int y)
     {
         _xPos = x;

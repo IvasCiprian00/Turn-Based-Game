@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     [SerializeField] private int _hp;
+    [SerializeField] private int _damage;
     [SerializeField] private int _xPos;
     [SerializeField] private int _yPos;
 
@@ -22,7 +23,6 @@ public class EnemyScript : MonoBehaviour
     {
         FindTarget();
         Movement();
-        Attack();
     }
 
     public void FindTarget()
@@ -50,11 +50,15 @@ public class EnemyScript : MonoBehaviour
         {
             MoveTowards();
         }
+        else
+        {
+            Attack();
+        }
     }
 
     public void Attack()
     {
-
+        _hsScript.TakeDamage(_damage);
     }
 
     public void MoveTowards()
@@ -79,6 +83,8 @@ public class EnemyScript : MonoBehaviour
 
     private bool CanAttack(HeroScript targetScript)
     {
+        Debug.Log(GetDistance(_xPos, targetScript.GetXPos(), _yPos, targetScript.GetYPos()));
+
         if (GetDistance(_xPos, targetScript.GetXPos(), _yPos, targetScript.GetYPos()) == 1)
         {
             return true;
@@ -87,7 +93,7 @@ public class EnemyScript : MonoBehaviour
         return false;
     }
 
-    public int GetDistance(int x, int y, int x2, int y2)
+    public int GetDistance(int x, int x2, int y, int y2)
     {
         return Mathf.Abs(x - x2) + Mathf.Abs(y - y2);
     }
