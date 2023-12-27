@@ -8,6 +8,7 @@ public class HeroScript : MonoBehaviour
     [SerializeField] private int _yPos;
 
     [Header("Hero Attributes")]
+    [SerializeField] private int _hp;
     [SerializeField] private int _damage;
     [SerializeField] private int _speed;
 
@@ -27,4 +28,5 @@ public class HeroScript : MonoBehaviour
     public string GetMovementType() { return _movementType; }
     public int GetDamage() { return _damage; }
     public int GetSpeed() { return _speed;}
+    public int GetHp() { return _hp;}
 }

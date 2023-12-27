@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
@@ -19,6 +20,11 @@ public class GameManager : MonoBehaviour
     public HeroScript hsScript;
     [SerializeField] private GameObject _selectedEffect;
     private GameObject _effectReference;
+
+    [Header("Enemy Section")]
+    public GameObject[] enemies;
+    public int currentEnemy;
+    public EnemyScript enemyScript;
 
     private int numberOfLines = 8;
     private int numberOfColumns = 6;
@@ -55,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeBoardElements()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < heroes.Length; i++)
         {
             int linePos = 5;
             int colPos = i + 1;
@@ -65,9 +71,18 @@ public class GameManager : MonoBehaviour
             heroes[i].transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
         }
 
+        for(int i = 0; i < enemies.Length; i++)
+        {
+            int linePos = 0;
+
+            enemies[i] = Instantiate(enemies[i]);
+            enemies[i].GetComponent<EnemyScript>().SetCoords(linePos, i);
+            gameBoard[linePos, i] = enemies[i];
+            enemies[i].transform.position = new Vector3(tiles[linePos, i].transform.position.x, tiles[linePos, i].transform.position.y, tiles[linePos, i].transform.position.z - 1f);
+        }
+
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
-
         gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
     }
 
@@ -102,13 +117,22 @@ public class GameManager : MonoBehaviour
 
         if(currentHero >= numberOfHeroes)
         {
-            currentHero = 0;
+            StartEnemyTurns();
         }
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
 
         GenerateMoveTiles();
+    }
+
+    public void StartEnemyTurns()
+    {
+        currentEnemy = 0;
+
+        enemyScript = enemies[currentEnemy].GetComponent<EnemyScript>();
+
+        enemyScript.StartTurn();
     }
 
     public void GenerateMoveTiles()
