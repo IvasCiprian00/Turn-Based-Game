@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     private int numberOfLines = 8;
     private int numberOfColumns = 6;
 
+    private bool _heroTurn = true;
     private bool _attacking = false;
 
     public GameObject[,] tiles;
@@ -47,7 +48,10 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        _effectReference.transform.position = heroes[currentHero].transform.position;
+        if (_heroTurn)
+        {
+            _effectReference.transform.position = heroes[currentHero].transform.position;
+        }
 
         if (speedLeft <= 0)
         {
@@ -118,6 +122,8 @@ public class GameManager : MonoBehaviour
         if(currentHero >= numberOfHeroes)
         {
             StartEnemyTurns();
+
+            return;
         }
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
@@ -132,6 +138,7 @@ public class GameManager : MonoBehaviour
 
         enemyScript = enemies[currentEnemy].GetComponent<EnemyScript>();
 
+        _heroTurn = false;
         enemyScript.StartTurn();
     }
 

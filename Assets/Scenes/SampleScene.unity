@@ -620,6 +620,10 @@ MonoBehaviour:
   canMove: 1
   hsScript: {fileID: 0}
   _selectedEffect: {fileID: 1964376638117116823, guid: 0eb1efae59a4f2f43be6c9897dafc627, type: 3}
+  enemies:
+  - {fileID: 3214501954215402014, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+  currentEnemy: 0
+  enemyScript: {fileID: 0}
 --- !u!4 &1853569550
 Transform:
   m_ObjectHideFlags: 0
