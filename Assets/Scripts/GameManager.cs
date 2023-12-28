@@ -235,4 +235,9 @@ public class GameManager : MonoBehaviour
     {
         return _attacking;
     }
+    
+    public bool IsHeroTurn()
+    {
+        return _heroTurn;
+    }
 }
