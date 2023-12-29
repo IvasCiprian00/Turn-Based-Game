@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
+
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
         InitializeBoardElements();
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < enemies.Length; i++)
         {
-            int linePos = 0;
+            int linePos = 5;
 
             enemies[i] = Instantiate(enemies[i]);
             enemies[i].GetComponent<EnemyScript>().SetCoords(linePos, i);
@@ -134,6 +135,9 @@ public class GameManager : MonoBehaviour
 
     public void StartEnemyTurns()
     {
+        DestroyMoveTiles();
+        Destroy(_effectReference);
+
         currentEnemy = 0;
 
         enemyScript = enemies[currentEnemy].GetComponent<EnemyScript>();

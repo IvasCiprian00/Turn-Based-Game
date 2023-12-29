@@ -14,9 +14,12 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private GameObject _target;
     [SerializeField] private HeroScript _hsScript;
 
+    [SerializeField] private Animator _animator;
+
     public void Start()
     {
         _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        _animator = GameObject.Find("Skeleton Sprite").GetComponent<Animator>();
     }
 
     public void StartTurn()
@@ -88,7 +91,6 @@ public class EnemyScript : MonoBehaviour
 
     public void UpdatePosition(int x, int y)
     {
-        //transform.parent.transform.position = _gmManager.tiles[_xPos, _yPos].transform.position - new Vector3(0, 0, 1);
         transform.position = _gmManager.tiles[_xPos, _yPos].transform.position - new Vector3(0, 0, 1);
         _gmManager.gameBoard[x, y] = null;
         _gmManager.gameBoard[_xPos, _yPos] = gameObject;
@@ -114,6 +116,7 @@ public class EnemyScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _hp -= damage;
+        _animator.SetTrigger("take_damage");
     }
 
     public void SetCoords(int x, int y)
