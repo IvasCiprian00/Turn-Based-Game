@@ -26,6 +26,8 @@ public class EnemyScript : MonoBehaviour
     {
         FindTarget();
         Movement();
+
+        EndTurn();
     }
 
     public void FindTarget()
@@ -56,6 +58,21 @@ public class EnemyScript : MonoBehaviour
         else
         {
             Attack();
+        }
+    }
+
+    public void EndTurn()
+    {
+        _gmManager.currentEnemy++;
+
+        if(_gmManager.currentEnemy >= _gmManager.enemies.Length)
+        {
+            //Debug.Log("YEY");
+            _gmManager.currentEnemy = 0;
+
+            _gmManager.StartHeroTurns();
+
+            return;
         }
     }
 
@@ -98,7 +115,7 @@ public class EnemyScript : MonoBehaviour
 
     public bool CanAttack(HeroScript targetScript)
     {
-        Debug.Log(GetDistance(_xPos, targetScript.GetXPos(), _yPos, targetScript.GetYPos()));
+        //Debug.Log(GetDistance(_xPos, targetScript.GetXPos(), _yPos, targetScript.GetYPos()));
 
         if (GetDistance(_xPos, targetScript.GetXPos(), _yPos, targetScript.GetYPos()) == 1)
         {

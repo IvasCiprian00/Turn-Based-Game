@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public GameManager gmManager;
 
+    [SerializeField] private GameObject _endTurnButton;
     [Header("Hero Stats")]
     [SerializeField] private GameObject _statsContainer;
     [SerializeField] private TextMeshProUGUI _hpText;
@@ -29,10 +30,11 @@ public class UIManager : MonoBehaviour
         if (!_statsContainer.activeSelf)
         {
             _statsContainer.SetActive(true);
+            _endTurnButton.SetActive(true);
         }
 
         _hpText.text = gmManager.hsScript.GetHp().ToString() + " HP";
-        _dmgText.text = gmManager.hsScript.GetDamage().ToString() + "DMG";
+        _dmgText.text = gmManager.hsScript.GetDamage().ToString() + " DMG";
     }
 
     public void HideHeroStats()
@@ -40,6 +42,7 @@ public class UIManager : MonoBehaviour
         if(_statsContainer.activeSelf)
         {
             _statsContainer.SetActive(false);
+            _endTurnButton.SetActive(false);
         }
     }
 }

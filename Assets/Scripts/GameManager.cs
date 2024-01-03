@@ -38,13 +38,11 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
-
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
         InitializeBoardElements();
 
-        GenerateMoveTiles();
+        StartHeroTurns();
     }
 
     public void Update()
@@ -122,6 +120,8 @@ public class GameManager : MonoBehaviour
 
         if(currentHero >= numberOfHeroes)
         {
+            currentHero = 0;
+
             StartEnemyTurns();
 
             return;
@@ -144,6 +144,18 @@ public class GameManager : MonoBehaviour
 
         _heroTurn = false;
         enemyScript.StartTurn();
+    }
+
+    public void StartHeroTurns()
+    {
+        currentHero = 0;
+        _heroTurn = true;
+        _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
+
+        hsScript = heroes[currentHero].GetComponent<HeroScript>();
+        speedLeft = hsScript.GetSpeed();
+
+        GenerateMoveTiles();
     }
 
     public void GenerateMoveTiles()

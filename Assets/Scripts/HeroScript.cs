@@ -20,7 +20,7 @@ public class HeroScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _hp -= damage;
-        Debug.Log("Attacked");
+        //Debug.Log("Attacked");
     }
 
     public void SetCoords(int x, int y)
