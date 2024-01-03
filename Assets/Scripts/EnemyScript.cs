@@ -19,7 +19,7 @@ public class EnemyScript : MonoBehaviour
     public void Start()
     {
         _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        _animator = GameObject.Find("Skeleton Sprite").GetComponent<Animator>();
+        //_animator = GameObject.Find("Skeleton Sprite").GetComponent<Animator>();
     }
 
     public void StartTurn()
@@ -133,7 +133,11 @@ public class EnemyScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _hp -= damage;
-        _animator.SetTrigger("take_damage");
+
+        if(_animator != null)
+        {
+            _animator.SetTrigger("take_damage");
+        }
     }
 
     public void SetCoords(int x, int y)

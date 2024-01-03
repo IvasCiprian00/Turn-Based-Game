@@ -52,7 +52,7 @@ MonoBehaviour:
   _gmManager: {fileID: 0}
   _target: {fileID: 0}
   _hsScript: {fileID: 0}
-  _animator: {fileID: 0}
+  _animator: {fileID: 3833614085085787152}
 --- !u!1 &7403018180450566085
 GameObject:
   m_ObjectHideFlags: 0
