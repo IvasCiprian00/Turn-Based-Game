@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public HeroScript hsScript;
     [SerializeField] private GameObject _selectedEffect;
     private GameObject _effectReference;
+    private int _heroesLeft;
 
     [Header("Enemy Section")]
     public GameObject[] enemies;
@@ -49,7 +50,10 @@ public class GameManager : MonoBehaviour
     {
         if (_heroTurn)
         {
-            _effectReference.transform.position = heroes[currentHero].transform.position;
+            if (heroes[currentHero] != null)
+            {
+                _effectReference.transform.position = heroes[currentHero].transform.position;
+            }
         }
 
         if (speedLeft <= 0)
@@ -76,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < enemies.Length; i++)
         {
-            int linePos = 5;
+            int linePos = 3;
 
             enemies[i] = Instantiate(enemies[i]);
             enemies[i].GetComponent<EnemyScript>().SetCoords(linePos, i);
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
         gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
+        _heroesLeft = numberOfHeroes;
     }
 
     private void GenerateGameBoard(int sizeX, int sizeY)
@@ -118,7 +123,7 @@ public class GameManager : MonoBehaviour
     {
         currentHero++;
 
-        if(currentHero >= numberOfHeroes)
+        if(currentHero >= numberOfHeroes || currentHero == -1)
         {
             currentHero = 0;
 
@@ -245,6 +250,30 @@ public class GameManager : MonoBehaviour
     public void SpawnTeleportTiles()
     {
 
+    }
+
+    public void HeroDeath(GameObject deadHero)
+    {
+        _heroesLeft--;
+
+        for(int i = 0; i < heroes.Length; i++)
+        {
+            if(deadHero == heroes[i])
+            {
+                RemoveDeadHero(i);
+                return;
+            }
+        }
+    }
+
+    public void RemoveDeadHero(int index)
+    {
+        for(int i = index; i < heroes.Length - 1; i++)
+        {
+            heroes[i] = heroes[i + 1];
+        }
+
+        numberOfHeroes--;
     }
 
     public bool IsAttacking()

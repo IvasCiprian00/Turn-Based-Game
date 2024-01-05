@@ -17,10 +17,20 @@ public class HeroScript : MonoBehaviour
 
     public GameManager gmManager;
 
+    public void Start()
+    {
+        gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    }
+
     public void TakeDamage(int damage)
     {
         _hp -= damage;
-        //Debug.Log("Attacked");
+
+        if (_hp <= 0 )
+        {
+            gmManager.HeroDeath(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     public void SetCoords(int x, int y)

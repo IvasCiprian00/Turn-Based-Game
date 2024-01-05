@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    [SerializeField] private int _hp;
-    [SerializeField] private int _damage;
-    [SerializeField] private int _xPos;
-    [SerializeField] private int _yPos;
 
     [SerializeField] private GameManager _gmManager;
     [SerializeField] private GameObject _target;
@@ -16,16 +12,32 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private Animator _animator;
 
+    [Header("Enemy Stats")]
+    [SerializeField] private int _hp;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _xPos;
+    [SerializeField] private int _yPos;
+    [SerializeField] private float _waitDuration = 0.2f;
+
     public void Start()
     {
         _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        //_animator = GameObject.Find("Skeleton Sprite").GetComponent<Animator>();
     }
 
     public void StartTurn()
     {
+        StartCoroutine(TakeTurn());
+    }
+
+    IEnumerator TakeTurn()
+    {
         FindTarget();
+
+        yield return new WaitForSeconds(_waitDuration);
+
         Movement();
+
+        yield return new WaitForSeconds(_waitDuration);
 
         EndTurn();
     }
@@ -74,6 +86,8 @@ public class EnemyScript : MonoBehaviour
 
             return;
         }
+
+        _gmManager.enemies[_gmManager.currentEnemy].GetComponent<EnemyScript>().StartTurn();
     }
 
     public void Attack()
