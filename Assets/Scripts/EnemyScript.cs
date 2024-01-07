@@ -100,19 +100,19 @@ public class EnemyScript : MonoBehaviour
         int pastXPos = _xPos;
         int pastYPos = _yPos;
 
-        if(_xPos <  _hsScript.GetXPos())
+        if(_xPos <  _hsScript.GetXPos() && _gmManager.gameBoard[_xPos + 1, _yPos] == null)
         {
             _xPos++;
         }
-        else if(_xPos > _hsScript.GetXPos())
+        else if(_xPos > _hsScript.GetXPos() && _gmManager.gameBoard[_xPos - 1, _yPos] == null)
         {
             _xPos--;
         }
-        else if(_yPos < _hsScript.GetYPos())
+        else if(_yPos < _hsScript.GetYPos() && _gmManager.gameBoard[_xPos, _yPos + 1] == null)
         {
             _yPos++;
         }
-        else if(_yPos > _hsScript.GetYPos())
+        else if(_yPos > _hsScript.GetYPos() && _gmManager.gameBoard[_xPos, _yPos - 1] == null)
         {
             _yPos--;
         }
