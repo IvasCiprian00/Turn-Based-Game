@@ -67,7 +67,6 @@ public class UIManager : MonoBehaviour
 
     public void ConfirmSkill()
     {
-        _skillManager = GameObject.Find(_selectedSkill).GetComponent<SkillManager>();
         _skillManager.UseSkill(_selectedSkill);
         DisplayCofirmButtons(false);
     }

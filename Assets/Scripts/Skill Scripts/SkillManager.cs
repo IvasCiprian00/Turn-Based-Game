@@ -14,15 +14,6 @@ public class SkillManager : MonoBehaviour
         gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
-    public void OnMouseUp()
-    {
-        uiManager.DisplayCofirmButtons(true);
-
-        uiManager.SetSkill(gameObject.name);
-
-        //Show different things based on skill name
-    }
-
     public void UseSkill(string skillName)
     {
         switch(skillName)
