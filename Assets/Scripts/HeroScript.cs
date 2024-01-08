@@ -6,6 +6,7 @@ public class HeroScript : MonoBehaviour
 {
     [SerializeField] private int _xPos;
     [SerializeField] private int _yPos;
+    [SerializeField] Animator _animator;
 
     [Header("Hero Attributes")]
     [SerializeField] private int _hp;
@@ -25,6 +26,11 @@ public class HeroScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _hp -= damage;
+
+        if (_animator != null)
+        {
+            _animator.SetTrigger("take_damage");
+        }
 
         if (_hp <= 0 )
         {
