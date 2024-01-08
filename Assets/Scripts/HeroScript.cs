@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,10 @@ public class HeroScript : MonoBehaviour
 
     [Header("Hero Attributes")]
     [SerializeField] private int _hp;
+    [SerializeField] private int _maxHp;
     [SerializeField] private int _damage;
     [SerializeField] private int _speed;
+    [SerializeField] GameObject[] _skills;
 
     [SerializeField]
     private string _movementType;
@@ -21,6 +24,16 @@ public class HeroScript : MonoBehaviour
     public void Start()
     {
         gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    }
+
+    public void Heal(int healValue)
+    {
+        _hp += healValue;
+
+        if(_hp > _maxHp)
+        {
+            _hp = _maxHp;
+        }
     }
 
     public void TakeDamage(int damage)

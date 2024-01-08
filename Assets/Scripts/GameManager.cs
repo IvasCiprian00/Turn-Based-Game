@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public int currentEnemy;
     public EnemyScript enemyScript;
 
-    private int numberOfLines = 8;
+    private int numberOfLines = 7;
     private int numberOfColumns = 6;
 
     private bool _heroTurn = true;

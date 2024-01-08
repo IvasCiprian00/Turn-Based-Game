@@ -8,6 +8,14 @@ public class UIManager : MonoBehaviour
     public GameManager gmManager;
 
     [SerializeField] private GameObject _endTurnButton;
+
+    [Header("Skills")]
+    [SerializeField] private SkillManager _skillManager;
+    [SerializeField] private GameObject _confirmSkill;
+    [SerializeField] private GameObject _cancelSkill;
+    [SerializeField] private string _selectedSkill;
+
+
     [Header("Hero Stats")]
     [SerializeField] private GameObject _statsContainer;
     [SerializeField] private TextMeshProUGUI _hpText;
@@ -44,5 +52,29 @@ public class UIManager : MonoBehaviour
             _statsContainer.SetActive(false);
             _endTurnButton.SetActive(false);
         }
+    }
+
+    public void DisplayCofirmButtons(bool isActive)
+    {
+        _confirmSkill.SetActive(isActive);
+        _cancelSkill.SetActive(isActive);
+    }
+
+    public void SetSkill(string skillName)
+    {
+        _selectedSkill = skillName;
+    }
+
+    public void ConfirmSkill()
+    {
+        _skillManager = GameObject.Find(_selectedSkill).GetComponent<SkillManager>();
+        _skillManager.UseSkill(_selectedSkill);
+        DisplayCofirmButtons(false);
+    }
+
+    public void CancelSkill()
+    {
+        _selectedSkill = null;
+        DisplayCofirmButtons(false);
     }
 }
