@@ -14,7 +14,7 @@ public class HeroScript : MonoBehaviour
     [SerializeField] private int _maxHp;
     [SerializeField] private int _damage;
     [SerializeField] private int _speed;
-    [SerializeField] GameObject[] _skills;
+    public GameObject[] skills;
 
     [SerializeField]
     private string _movementType;

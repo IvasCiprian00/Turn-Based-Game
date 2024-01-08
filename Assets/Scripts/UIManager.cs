@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _confirmSkill;
     [SerializeField] private GameObject _cancelSkill;
     [SerializeField] private string _selectedSkill;
+    [SerializeField] private GameObject[] _skillSlots;
+    [SerializeField] private GameObject[] _skillReference;
 
 
     [Header("Hero Stats")]
@@ -51,6 +53,37 @@ public class UIManager : MonoBehaviour
         {
             _statsContainer.SetActive(false);
             _endTurnButton.SetActive(false);
+        }
+    }
+
+    public void DisplaySkills(GameObject[] skills)
+    {
+        int currentSkillSlot = 0;
+
+        _skillReference = new GameObject[skills.Length];
+
+        for(int i = 0; i < skills.Length; i++)
+        {
+            if (skills[i] == null)
+            {
+                continue;
+            }
+
+            _skillReference[i] = Instantiate(skills[i], _skillSlots[currentSkillSlot].transform.position, Quaternion.identity);
+            currentSkillSlot++;
+        }
+    }
+
+    public void HideSkills()
+    {
+        for(int i = 0; i < _skillReference.Length; i++)
+        {
+            if(_skillReference[i] == null)
+            {
+                continue;
+            }
+
+            Destroy(_skillReference[i]);
         }
     }
 

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] private UIManager _uiManager;
     [SerializeField] private GameObject _tile;
     [SerializeField] private GameObject _moveTile;
     [SerializeField] private GameObject _dummy;
@@ -121,6 +123,7 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
+        _uiManager.HideSkills();
         currentHero++;
 
         if(currentHero >= numberOfHeroes || currentHero == -1)
@@ -135,6 +138,7 @@ public class GameManager : MonoBehaviour
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
 
+        _uiManager.DisplaySkills(hsScript.skills);
         GenerateMoveTiles();
     }
 
@@ -159,6 +163,8 @@ public class GameManager : MonoBehaviour
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
+
+        _uiManager.DisplaySkills(hsScript.skills);
 
         GenerateMoveTiles();
     }

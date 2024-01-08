@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalHealSkill : MonoBehaviour
+public class SkillSelector : MonoBehaviour
 {
     public UIManager uiManager;
 
@@ -16,5 +16,14 @@ public class GlobalHealSkill : MonoBehaviour
         uiManager.DisplayCofirmButtons(true);
 
         uiManager.SetSkill(gameObject.name);
+
+        switch(gameObject.name)
+        {
+            case "Global Heal":
+
+                break;
+            default:
+                break;
+        }
     }
 }

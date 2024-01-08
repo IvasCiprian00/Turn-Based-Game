@@ -18,8 +18,11 @@ public class SkillManager : MonoBehaviour
     {
         switch(skillName)
         {
-            case "Global Heal":
+            case "Global Heal(Clone)":
                 GlobalHeal();
+                break;
+            case "Great Strike(Clone)":
+                GreatStrike();
                 break;
             default:
                 break;
@@ -37,5 +40,10 @@ public class SkillManager : MonoBehaviour
                 hsScript.Heal(1);
             }
         }
+    }
+
+    public void GreatStrike()
+    {
+
     }
 }
