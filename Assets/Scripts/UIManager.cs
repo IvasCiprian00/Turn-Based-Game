@@ -107,6 +107,7 @@ public class UIManager : MonoBehaviour
 
     public void CancelSkill()
     {
+        _skillManager.CancelSkill(_selectedSkill);
         _selectedSkill = null;
         DisplayCofirmButtons(false);
     }

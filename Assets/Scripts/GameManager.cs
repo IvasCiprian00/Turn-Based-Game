@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
     public void EndTurn()
     {
         _uiManager.HideSkills();
+        _uiManager.CancelSkill();
         currentHero++;
 
         if(currentHero >= numberOfHeroes || currentHero == -1)

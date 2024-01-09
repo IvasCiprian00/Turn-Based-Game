@@ -34,6 +34,30 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+    public void CancelSkill(string skillName)
+    {
+        switch (skillName)
+        {
+            case "Global Heal(Clone)":
+                break;
+            case "Great Strike(Clone)":
+                DestroySelectTiles();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void DestroySelectTiles()
+    {
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Select Tile");
+
+        for(int i = 0; i < tiles.Length; i++) 
+        {
+            Destroy(tiles[i]);
+        }
+    }
+
     public void GlobalHeal()
     {
         for(int i = 0; i < gmManager.heroes.Length; i++)
