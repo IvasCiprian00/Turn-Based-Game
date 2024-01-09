@@ -70,6 +70,7 @@ public class UIManager : MonoBehaviour
             }
 
             _skillReference[i] = Instantiate(skills[i], _skillSlots[currentSkillSlot].transform.position, Quaternion.identity);
+            _skillReference[i].transform.position = new Vector3(_skillReference[i].transform.position.x, _skillReference[i].transform.position.y, -2);
             currentSkillSlot++;
         }
     }

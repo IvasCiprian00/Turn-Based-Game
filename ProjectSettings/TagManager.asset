@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Move Tile
   - Enemy
+  - Select Tile
   layers:
   - Default
   - TransparentFX

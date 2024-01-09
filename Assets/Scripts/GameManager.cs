@@ -291,4 +291,8 @@ public class GameManager : MonoBehaviour
     {
         return _heroTurn;
     }
+
+    public int GetNumberOfLines(){ return numberOfLines; }
+
+    public int GetNumberOfColumns(){ return numberOfColumns; }
 }
