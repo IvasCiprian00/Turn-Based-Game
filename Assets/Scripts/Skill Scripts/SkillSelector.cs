@@ -20,6 +20,7 @@ public class SkillSelector : MonoBehaviour
 
     public void OnMouseUp()
     {
+        uiManager.ToggleMoveTiles(false);
 
         uiManager.SetSkill(gameObject.name);
 

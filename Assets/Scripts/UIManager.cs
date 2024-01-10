@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public GameManager gmManager;
 
     [SerializeField] private GameObject _endTurnButton;
+    [SerializeField] private GameObject[] _activeTiles;
 
     [Header("Skills")]
     [SerializeField] private SkillManager _skillManager;
@@ -102,6 +103,7 @@ public class UIManager : MonoBehaviour
     public void ConfirmSkill()
     {
         _skillManager.UseSkill(_selectedSkill);
+        ToggleMoveTiles(true);
         DisplayCofirmButtons(false);
     }
 
@@ -109,6 +111,24 @@ public class UIManager : MonoBehaviour
     {
         _skillManager.CancelSkill(_selectedSkill);
         _selectedSkill = null;
+        ToggleMoveTiles(true);
         DisplayCofirmButtons(false);
+    }
+
+    public void ToggleMoveTiles(bool isActive) {
+        if(!isActive)
+        {
+           _activeTiles = GameObject.FindGameObjectsWithTag("Move Tile");
+        }
+
+        for (int i = 0; i < _activeTiles.Length; i++)
+        {
+            if (_activeTiles[i] == null) 
+            { 
+                continue; 
+            }
+
+            _activeTiles[i].SetActive(isActive);
+        }
     }
 }

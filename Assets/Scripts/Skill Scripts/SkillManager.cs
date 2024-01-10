@@ -109,7 +109,6 @@ public class SkillManager : MonoBehaviour
 
             if (tileXPos >= 0 && tileXPos < gmManager.GetNumberOfLines() && tileYPos >= 0 && tileYPos < gmManager.GetNumberOfColumns())
             {
-                Debug.Log(tileXPos + " " + tileYPos);
                 GameObject tilePosition = gmManager.tiles[tileXPos, tileYPos];
                 GameObject reference = Instantiate(selectTile, tilePosition.transform.position, Quaternion.identity);
 
