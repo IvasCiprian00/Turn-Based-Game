@@ -158,6 +158,7 @@ MonoBehaviour:
   _maxHp: 10
   _damage: 1
   _speed: 1
-  skills: []
+  skills:
+  - {fileID: 8892583251046609617, guid: 44e314504af31684ba272533d9e64400, type: 3}
   _movementType: basic
   gmManager: {fileID: 0}
