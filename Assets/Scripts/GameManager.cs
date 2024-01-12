@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -214,6 +215,7 @@ public class GameManager : MonoBehaviour
     public void CreateMoveTiles()
     {
         string mvmt = hsScript.GetMovementType();
+        string attackType = hsScript.GetAttackType();
 
         switch (mvmt)
         {
@@ -228,6 +230,57 @@ public class GameManager : MonoBehaviour
                 break;
             default: break;
         }
+
+        if(attackType == "mixed" || attackType == "ranged")
+        {
+            int range = hsScript.GetRange();
+
+            DirectionalCheck(0, 1, range);
+            DirectionalCheck(1, 0, range);
+            DirectionalCheck(0, -1, range);
+            DirectionalCheck(-1, 0, range);
+            DirectionalCheck(1, 1, range);
+            DirectionalCheck(1, -1, range);
+            DirectionalCheck(-1, -1, range);
+            DirectionalCheck(-1, 1, range);
+        }
+    }
+
+    public void DirectionalCheck(int line, int col, int n)
+    {
+        int currentLine = hsScript.GetXPos();
+        int currentCol = hsScript.GetYPos();
+
+        for(int i = 0; i< n; i++)
+        {
+            currentLine += line;
+            currentCol += col;
+
+            if(!PositionIsValid(currentLine, currentCol))
+            {
+                continue;
+            }
+
+            if(gameBoard[currentLine, currentCol] == null)
+            {
+                continue;
+            }
+
+            if (gameBoard[currentLine, currentCol].tag == "Enemy")
+            {
+                Debug.Log(currentLine + " " + currentCol);
+            }
+        }
+    }
+
+    public bool PositionIsValid(int x, int y)
+    {
+        if(x >= 0 && x < numberOfLines && y >= 0 && y < numberOfColumns)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void SpawnBasicTiles(int speed)
@@ -244,7 +297,7 @@ public class GameManager : MonoBehaviour
             {
                 _attacking = false;
 
-                if(i < 0 || j < 0 || i > numberOfLines - 1 || j > numberOfColumns - 1)
+                if(!PositionIsValid(i, j))
                 {
                     continue;
                 }

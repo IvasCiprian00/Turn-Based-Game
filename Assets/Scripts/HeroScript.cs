@@ -18,6 +18,7 @@ public class HeroScript : MonoBehaviour
 
     [SerializeField] private string _movementType;
     [SerializeField] private string _attackType;
+    [SerializeField] private int _range;
 
     public GameManager gmManager;
 
@@ -65,4 +66,5 @@ public class HeroScript : MonoBehaviour
     public int GetSpeed() { return _speed;}
     public int GetHp() { return _hp;}
     public string GetAttackType() { return _attackType;}
+    public int GetRange() { return _range;}
 }
