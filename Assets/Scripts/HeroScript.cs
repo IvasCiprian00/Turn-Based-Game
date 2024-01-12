@@ -47,7 +47,7 @@ public class HeroScript : MonoBehaviour
 
         if (_hp <= 0 )
         {
-            gmManager.CharacterDeath(gameObject, gmManager.heroes);
+            gmManager.CharacterDeath(gameObject, gmManager.heroes, ref gmManager.nrOfHeroes);
             Destroy(gameObject);
         }
     }

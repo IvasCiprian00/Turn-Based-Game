@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Hero Section")]
     public GameObject[] heroes;
+    public int nrOfHeroes;
     public int currentHero;
     public int speedLeft;
     public bool canMove = true;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Enemy Section")]
     public GameObject[] enemies;
+    public int nrOfEnemies;
     public int currentEnemy;
     public EnemyScript enemyScript;
 
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     private bool _heroTurn = true;
     private bool _attacking = false;
+    private bool _levelIsOver = false;
 
     public GameObject[,] tiles;
     public GameObject[,] gameBoard;
@@ -41,6 +44,9 @@ public class GameManager : MonoBehaviour
     {
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
+        nrOfHeroes = heroes.Length;
+        nrOfEnemies = enemies.Length;
+
         InitializeBoardElements();
 
         StartHeroTurns();
@@ -48,27 +54,48 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (_heroTurn)
+        CheckLevelProgress();
+
+        if (!_levelIsOver)
         {
-            if (heroes[currentHero] != null)
+            if (_heroTurn)
             {
-                _effectReference.transform.position = heroes[currentHero].transform.position;
+                if (heroes[currentHero] != null)
+                {
+                    _effectReference.transform.position = heroes[currentHero].transform.position;
+                }
+            }
+
+            if (speedLeft <= 0)
+            {
+                canMove = false;
+            }
+            else
+            {
+                canMove = true;
             }
         }
+    }
 
-        if (speedLeft <= 0)
+    public void CheckLevelProgress()
+    {
+        if(nrOfHeroes == 0)
         {
-            canMove = false;
+            _levelIsOver = true;
+
+            Debug.Log("Heroes Lost");
         }
-        else
+        else if (nrOfEnemies == 0)
         {
-            canMove = true;
+            _levelIsOver = true;
+
+            Debug.Log("Heroes Won");
         }
     }
 
     private void InitializeBoardElements()
     {
-        for (int i = 0; i < heroes.Length; i++)
+        for (int i = 0; i < nrOfHeroes; i++)
         {
             int linePos = 5;
             int colPos = i + 1;
@@ -78,7 +105,7 @@ public class GameManager : MonoBehaviour
             heroes[i].transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
         }
 
-        for(int i = 0; i < enemies.Length; i++)
+        for(int i = 0; i < nrOfEnemies; i++)
         {
             int linePos = 3;
 
@@ -124,7 +151,7 @@ public class GameManager : MonoBehaviour
         _uiManager.CancelSkill();
         currentHero++;
 
-        if(currentHero >= heroes.Length || currentHero == -1)
+        if(currentHero >= nrOfHeroes || currentHero == -1)
         {
             currentHero = 0;
 
@@ -254,25 +281,29 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void CharacterDeath(GameObject deadChar, GameObject[] charArray)
+    public void CharacterDeath(GameObject deadChar, GameObject[] charArray, ref int nrOfCharacters)
     {
-        for(int i = 0; i < charArray.Length; i++) 
+        for(int i = 0; i < nrOfCharacters; i++) 
         {
             if(deadChar == charArray[i])
             {
-                RemoveDeadChar(i, charArray);
+                RemoveDeadChar(i, charArray, nrOfCharacters);
+
+                nrOfCharacters--;
+
                 return;
             }
         }
     }
 
 
-    public void RemoveDeadChar(int index, GameObject[] array)
+    public void RemoveDeadChar(int index, GameObject[] array, int charNumber)
     {
-        for(int i = index; i < array.Length - 1; i++)
+        for(int i = index; i < charNumber - 1; i++)
         {
             array[i] = array[i + 1];
         }
+
     }
 
     public bool IsAttacking()

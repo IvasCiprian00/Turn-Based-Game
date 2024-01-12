@@ -78,7 +78,7 @@ public class EnemyScript : MonoBehaviour
     {
         _gmManager.currentEnemy++;
 
-        if(_gmManager.currentEnemy >= _gmManager.enemies.Length)
+        if(_gmManager.currentEnemy >= _gmManager.nrOfEnemies)
         {
             //Debug.Log("YEY");
             _gmManager.currentEnemy = 0;
@@ -153,7 +153,7 @@ public class EnemyScript : MonoBehaviour
 
         if(_hp <= 0)
         {
-            _gmManager.CharacterDeath(gameObject, _gmManager.enemies);
+            _gmManager.CharacterDeath(gameObject, _gmManager.enemies, ref _gmManager.nrOfEnemies);
             Destroy(gameObject);
         }
 

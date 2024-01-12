@@ -1413,6 +1413,7 @@ MonoBehaviour:
   - {fileID: 1565210866}
   - {fileID: 1944300984}
   - {fileID: 1287614068}
+  nrOfHeroes: 0
   currentHero: 0
   speedLeft: 0
   canMove: 1
@@ -1421,6 +1422,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
   - {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+  nrOfEnemies: 0
   currentEnemy: 0
   enemyScript: {fileID: 0}
 --- !u!4 &1853569550
@@ -1860,6 +1862,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5368155518550809032, guid: 555e2e8787c537949aa9cc101b21d266, type: 3}
+      propertyPath: _hp
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -5368155518550809032, guid: 555e2e8787c537949aa9cc101b21d266, type: 3}
       propertyPath: _attackType
       value: melee
