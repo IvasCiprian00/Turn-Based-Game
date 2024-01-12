@@ -15,14 +15,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Hero Section")]
     public GameObject[] heroes;
-    public int numberOfHeroes;
     public int currentHero;
     public int speedLeft;
     public bool canMove = true;
     public HeroScript hsScript;
     [SerializeField] private GameObject _selectedEffect;
     private GameObject _effectReference;
-    private int _heroesLeft;
 
     [Header("Enemy Section")]
     public GameObject[] enemies;
@@ -93,7 +91,6 @@ public class GameManager : MonoBehaviour
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
         gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
-        _heroesLeft = numberOfHeroes;
     }
 
     private void GenerateGameBoard(int sizeX, int sizeY)
@@ -127,7 +124,7 @@ public class GameManager : MonoBehaviour
         _uiManager.CancelSkill();
         currentHero++;
 
-        if(currentHero >= numberOfHeroes || currentHero == -1)
+        if(currentHero >= heroes.Length || currentHero == -1)
         {
             currentHero = 0;
 
@@ -232,7 +229,7 @@ public class GameManager : MonoBehaviour
 
                 if (gameBoard[i, j] != null)
                 {
-                    if (gameBoard[i, j].tag == "Enemy")
+                    if (gameBoard[i, j].tag == "Enemy" && (hsScript.GetAttackType() == "melee" || hsScript.GetAttackType() == "mixed"))
                     {
                         _attacking = true;
                     }
@@ -248,8 +245,6 @@ public class GameManager : MonoBehaviour
                 GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity);   // without reference, the moveplates don't work correctly
                 reference.GetComponent<MoveTileScript>().SetCoords(i, j);
                 reference.GetComponent<MoveTileScript>().SetAttacking(_attacking);
-
-                // ADD A BUTTON TO END TURN AND DECREASE SPEED AFTER MOVING
             }
         }
     }
@@ -259,28 +254,25 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void HeroDeath(GameObject deadHero)
+    public void CharacterDeath(GameObject deadChar, GameObject[] charArray)
     {
-        _heroesLeft--;
-
-        for(int i = 0; i < heroes.Length; i++)
+        for(int i = 0; i < charArray.Length; i++) 
         {
-            if(deadHero == heroes[i])
+            if(deadChar == charArray[i])
             {
-                RemoveDeadHero(i);
+                RemoveDeadChar(i, charArray);
                 return;
             }
         }
     }
 
-    public void RemoveDeadHero(int index)
-    {
-        for(int i = index; i < heroes.Length - 1; i++)
-        {
-            heroes[i] = heroes[i + 1];
-        }
 
-        numberOfHeroes--;
+    public void RemoveDeadChar(int index, GameObject[] array)
+    {
+        for(int i = index; i < array.Length - 1; i++)
+        {
+            array[i] = array[i + 1];
+        }
     }
 
     public bool IsAttacking()

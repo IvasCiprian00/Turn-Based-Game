@@ -21,6 +21,7 @@ public class EnemyScript : MonoBehaviour
 
     public void Start()
     {
+        SetZPos(-3);
         _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
@@ -46,7 +47,7 @@ public class EnemyScript : MonoBehaviour
     {
         int minDistance = 99;
 
-        for(int i = 0; i < _gmManager.numberOfHeroes; i++)
+        for(int i = 0; i < _gmManager.heroes.Length; i++)
         {
             HeroScript hsScript = _gmManager.heroes[i].GetComponent<HeroScript>();
             int distance = Mathf.Abs(_xPos - hsScript.GetXPos()) + Mathf.Abs(_yPos - hsScript.GetYPos());
@@ -123,7 +124,7 @@ public class EnemyScript : MonoBehaviour
     public void UpdatePosition(int x, int y)
     {
         transform.position = _gmManager.tiles[_xPos, _yPos].transform.position;
-        transform.position = new Vector3(transform.position.x, transform.position.y, -3);
+        SetZPos(-3);
 
         _gmManager.gameBoard[x, y] = null;
         _gmManager.gameBoard[_xPos, _yPos] = gameObject;
@@ -150,6 +151,12 @@ public class EnemyScript : MonoBehaviour
     {
         _hp -= damage;
 
+        if(_hp <= 0)
+        {
+            _gmManager.CharacterDeath(gameObject, _gmManager.enemies);
+            Destroy(gameObject);
+        }
+
         if(_animator != null)
         {
             _animator.SetTrigger("take_damage");
@@ -160,5 +167,10 @@ public class EnemyScript : MonoBehaviour
     {
         _xPos = x;
         _yPos = y;
+    }
+
+    public void SetZPos(int z)
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, z);
     }
 }
