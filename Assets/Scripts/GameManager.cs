@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public int nrOfHeroes;
     public int currentHero;
     public int speedLeft;
+    public int attacksLeft;
     public bool canMove = true;
     public HeroScript hsScript;
     [SerializeField] private GameObject _selectedEffect;
@@ -163,6 +164,7 @@ public class GameManager : MonoBehaviour
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
+        attacksLeft = hsScript.GetSpeed();
 
         _uiManager.DisplaySkills(hsScript.skills);
         GenerateMoveTiles();
@@ -189,6 +191,7 @@ public class GameManager : MonoBehaviour
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
+        attacksLeft = hsScript.GetNumberOfAttacks();
 
         _uiManager.DisplaySkills(hsScript.skills);
 
@@ -200,7 +203,13 @@ public class GameManager : MonoBehaviour
         DestroyMoveTiles();
 
         CreateMoveTiles();
+
+        if (attacksLeft != 0){
+            CreateAttackTiles();
+        }
+
     }
+
 
     public void DestroyMoveTiles()
     {
@@ -215,7 +224,6 @@ public class GameManager : MonoBehaviour
     public void CreateMoveTiles()
     {
         string mvmt = hsScript.GetMovementType();
-        string attackType = hsScript.GetAttackType();
 
         switch (mvmt)
         {
@@ -231,7 +239,13 @@ public class GameManager : MonoBehaviour
             default: break;
         }
 
-        if(attackType == "mixed" || attackType == "ranged")
+    }
+
+    public void CreateAttackTiles()
+    {
+        string attackType = hsScript.GetAttackType();
+
+        if (attackType == "mixed" || attackType == "ranged")
         {
             int range = hsScript.GetRange();
 
@@ -243,6 +257,14 @@ public class GameManager : MonoBehaviour
             DirectionalCheck(1, -1, range);
             DirectionalCheck(-1, -1, range);
             DirectionalCheck(-1, 1, range);
+        }
+
+        if (attackType == "melee")
+        {
+            DirectionalCheck(0, 1, 1);
+            DirectionalCheck(1, 0, 1);
+            DirectionalCheck(0, -1, 1);
+            DirectionalCheck(-1, 0, 1);
         }
     }
 
@@ -268,7 +290,8 @@ public class GameManager : MonoBehaviour
 
             if (gameBoard[currentLine, currentCol].tag == "Enemy")
             {
-                Debug.Log(currentLine + " " + currentCol);
+                Debug.Log(gameBoard[currentLine, currentCol]);
+                SpawnTile(true, currentLine, currentCol);
             }
         }
     }
@@ -309,24 +332,22 @@ public class GameManager : MonoBehaviour
 
                 if (gameBoard[i, j] != null)
                 {
-                    if (gameBoard[i, j].tag == "Enemy" && (hsScript.GetAttackType() == "melee" || hsScript.GetAttackType() == "mixed"))
-                    {
-                        _attacking = true;
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
-                Vector3 tilePosition = tiles[i, j].transform.position;
-                tilePosition -= new Vector3(0, 0, 1);
-
-                GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity);   // without reference, the moveplates don't work correctly
-                reference.GetComponent<MoveTileScript>().SetCoords(i, j);
-                reference.GetComponent<MoveTileScript>().SetAttacking(_attacking);
+                SpawnTile(_attacking, i, j);
             }
         }
+    }
+
+    public void SpawnTile(bool isAttackTile, int line, int col)
+    {
+        Vector3 tilePosition = tiles[line, col].transform.position;
+        tilePosition -= new Vector3(0, 0, 1);
+
+        GameObject reference = Instantiate(_moveTile, tilePosition, Quaternion.identity); 
+        reference.GetComponent<MoveTileScript>().SetCoords(line, col);
+        reference.GetComponent<MoveTileScript>().SetAttacking(isAttackTile);
     }
 
     public void SpawnTeleportTiles()
@@ -334,8 +355,10 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void CharacterDeath(GameObject deadChar, GameObject[] charArray, ref int nrOfCharacters)
+    public void CharacterDeath(GameObject deadChar, GameObject[] charArray, ref int nrOfCharacters, int posX, int posY)
     {
+        gameBoard[posX, posY] = null;
+
         for(int i = 0; i < nrOfCharacters; i++) 
         {
             if(deadChar == charArray[i])

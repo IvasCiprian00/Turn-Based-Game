@@ -14,6 +14,7 @@ public class HeroScript : MonoBehaviour
     [SerializeField] private int _maxHp;
     [SerializeField] private int _damage;
     [SerializeField] private int _speed;
+    [SerializeField] private int _nrOfAttacks;
     public GameObject[] skills;
 
     [SerializeField] private string _movementType;
@@ -48,7 +49,7 @@ public class HeroScript : MonoBehaviour
 
         if (_hp <= 0 )
         {
-            gmManager.CharacterDeath(gameObject, gmManager.heroes, ref gmManager.nrOfHeroes);
+            gmManager.CharacterDeath(gameObject, gmManager.heroes, ref gmManager.nrOfHeroes, _xPos, _yPos);
             Destroy(gameObject);
         }
     }
@@ -67,4 +68,5 @@ public class HeroScript : MonoBehaviour
     public int GetHp() { return _hp;}
     public string GetAttackType() { return _attackType;}
     public int GetRange() { return _range;}
+    public int GetNumberOfAttacks() { return _nrOfAttacks; }
 }

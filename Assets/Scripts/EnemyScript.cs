@@ -153,7 +153,7 @@ public class EnemyScript : MonoBehaviour
 
         if(_hp <= 0)
         {
-            _gmManager.CharacterDeath(gameObject, _gmManager.enemies, ref _gmManager.nrOfEnemies);
+            _gmManager.CharacterDeath(gameObject, _gmManager.enemies, ref _gmManager.nrOfEnemies, _xPos, _yPos);// need to clear position on gameBoard
             Destroy(gameObject);
         }
 
