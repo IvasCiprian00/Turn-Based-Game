@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
     public int currentEnemy;
     public EnemyScript enemyScript;
 
-    private int numberOfLines = 7;
-    private int numberOfColumns = 6;
+    private int numberOfLines = 6;
+    private int numberOfColumns = 5;
 
     private bool _heroTurn = true;
     private bool _attacking = false;
@@ -124,16 +124,16 @@ public class GameManager : MonoBehaviour
 
     private void GenerateGameBoard(int sizeX, int sizeY)
     {
-        float xPos = -2.33f;
-        float yPos = 3f;
-        float positionIncrement = 0.932f;
+        float xPos = -2.25f;
+        float yPos = 3.5f;
+        float positionIncrement = Mathf.Abs(xPos) * 2 / 4;
 
         tiles = new GameObject[sizeX, sizeY];
         gameBoard = new GameObject[sizeX, sizeY];
 
         for (int i = 0; i < sizeX; i++)
         {
-            xPos = -2.33f;
+            xPos = -2.25f;
 
             for (int j = 0; j < sizeY; j++)
             {
@@ -290,7 +290,6 @@ public class GameManager : MonoBehaviour
 
             if (gameBoard[currentLine, currentCol].tag == "Enemy")
             {
-                Debug.Log(gameBoard[currentLine, currentCol]);
                 SpawnTile(true, currentLine, currentCol);
             }
         }
