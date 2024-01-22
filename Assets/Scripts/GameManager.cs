@@ -131,7 +131,6 @@ public class GameManager : MonoBehaviour
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
-        //gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
     }
 
     private void GenerateGameBoard(int sizeX, int sizeY)
@@ -411,7 +410,6 @@ public class GameManager : MonoBehaviour
 
     public void RemoveDeadChar(int index, EnemyInfo[] array, int charNumber)
     {
-        Debug.Log(index + " " + charNumber);
         for (int i = index; i < charNumber - 1; i++)
         {
             array[i].enemy = array[i + 1].enemy;
