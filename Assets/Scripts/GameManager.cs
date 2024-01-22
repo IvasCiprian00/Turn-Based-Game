@@ -119,12 +119,6 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < nrOfEnemies; i++)
         {
-            //int linePos = 3;
-            //enemies[i] = Instantiate(enemies[i]);
-            //enemies[i].GetComponent<EnemyScript>().SetCoords(linePos, i);
-            //gameBoard[linePos, i] = enemies[i];
-            //enemies[i].transform.position = new Vector3(tiles[linePos, i].transform.position.x, tiles[linePos, i].transform.position.y, tiles[linePos, i].transform.position.z - 1f);
-
             int linePos = enemyList[i].startingXPos;
             int colPos = enemyList[i].startingYPos;
 
@@ -307,7 +301,6 @@ public class GameManager : MonoBehaviour
 
             if (gameBoard[currentLine, currentCol].tag == "Enemy")
             {
-                Debug.Log(gameBoard[currentLine, currentCol]);
                 SpawnTile(true, currentLine, currentCol);
             }
         }
@@ -389,7 +382,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public void RemoveDeadChar(int index, GameObject[] array, int charNumber)
     {
         for(int i = index; i < charNumber - 1; i++)
@@ -397,6 +389,35 @@ public class GameManager : MonoBehaviour
             array[i] = array[i + 1];
         }
 
+    }
+
+    public void CharacterDeath(GameObject deadChar, EnemyInfo[] charArray, ref int nrOfCharacters, int posX, int posY)
+    {
+        gameBoard[posX, posY] = null;
+
+        for (int i = 0; i < nrOfCharacters; i++)
+        {
+            if (deadChar == charArray[i].enemy)
+            {
+                RemoveDeadChar(i, charArray, nrOfCharacters);
+
+                nrOfCharacters--;
+
+                return;
+            }
+        }
+    }
+
+    public void RemoveDeadChar(int index, EnemyInfo[] array, int charNumber)
+    {
+        Debug.Log(index + " " + charNumber);
+        for (int i = index; i < charNumber - 1; i++)
+        {
+            Debug.Log("??");
+            array[i].enemy = array[i + 1].enemy;
+            array[i].startingXPos = array[i + 1].startingXPos;
+            array[i].startingYPos = array[i + 1].startingYPos;
+        }
     }
 
     public bool IsAttacking()
