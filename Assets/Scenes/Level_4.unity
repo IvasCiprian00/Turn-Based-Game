@@ -1483,6 +1483,9 @@ MonoBehaviour:
   - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
     startingXPos: 3
     startingYPos: 3
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    startingXPos: 1
+    startingYPos: 4
   nrOfEnemies: 0
   currentEnemy: 0
   enemyScript: {fileID: 0}

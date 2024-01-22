@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -55,7 +56,6 @@ public class GameManager : MonoBehaviour
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
         nrOfHeroes = heroes.Length;
-        //nrOfEnemies = enemies.Length;
         nrOfEnemies = enemyList.Length;
 
         InitializeBoardElements();
@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
             _levelIsOver = true;
 
             Debug.Log("Heroes Won");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
@@ -413,7 +414,6 @@ public class GameManager : MonoBehaviour
         Debug.Log(index + " " + charNumber);
         for (int i = index; i < charNumber - 1; i++)
         {
-            Debug.Log("??");
             array[i].enemy = array[i + 1].enemy;
             array[i].startingXPos = array[i + 1].startingXPos;
             array[i].startingYPos = array[i + 1].startingYPos;

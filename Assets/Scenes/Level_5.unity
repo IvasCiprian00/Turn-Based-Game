@@ -1475,11 +1475,17 @@ MonoBehaviour:
   _selectedEffect: {fileID: 1964376638117116823, guid: 0eb1efae59a4f2f43be6c9897dafc627, type: 3}
   enemyList:
   - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-    startingXPos: 3
+    startingXPos: 1
     startingYPos: 1
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    startingXPos: 1
+    startingYPos: 2
   - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
     startingXPos: 3
     startingYPos: 2
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    startingXPos: 4
+    startingYPos: 3
   - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
     startingXPos: 3
     startingYPos: 3
