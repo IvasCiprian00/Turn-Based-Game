@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,6 +8,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Serializable] public struct EnemyInfo
+    {
+        public GameObject enemy;
+        public int startingXPos;
+        public int startingYPos;
+    }
 
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private GameObject _tile;
@@ -26,7 +33,8 @@ public class GameManager : MonoBehaviour
     private GameObject _effectReference;
 
     [Header("Enemy Section")]
-    public GameObject[] enemies;
+    //public GameObject[] enemies;
+    public EnemyInfo[] enemyList;
     public int nrOfEnemies;
     public int currentEnemy;
     public EnemyScript enemyScript;
@@ -47,7 +55,8 @@ public class GameManager : MonoBehaviour
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
         nrOfHeroes = heroes.Length;
-        nrOfEnemies = enemies.Length;
+        //nrOfEnemies = enemies.Length;
+        nrOfEnemies = enemyList.Length;
 
         InitializeBoardElements();
 
@@ -56,10 +65,11 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        CheckLevelProgress();
 
         if (!_levelIsOver)
         {
+            CheckLevelProgress();
+
             if (_heroTurn)
             {
                 if (heroes[currentHero] != null)
@@ -109,17 +119,24 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < nrOfEnemies; i++)
         {
-            int linePos = 3;
+            //int linePos = 3;
+            //enemies[i] = Instantiate(enemies[i]);
+            //enemies[i].GetComponent<EnemyScript>().SetCoords(linePos, i);
+            //gameBoard[linePos, i] = enemies[i];
+            //enemies[i].transform.position = new Vector3(tiles[linePos, i].transform.position.x, tiles[linePos, i].transform.position.y, tiles[linePos, i].transform.position.z - 1f);
 
-            enemies[i] = Instantiate(enemies[i]);
-            enemies[i].GetComponent<EnemyScript>().SetCoords(linePos, i);
-            gameBoard[linePos, i] = enemies[i];
-            enemies[i].transform.position = new Vector3(tiles[linePos, i].transform.position.x, tiles[linePos, i].transform.position.y, tiles[linePos, i].transform.position.z - 1f);
+            int linePos = enemyList[i].startingXPos;
+            int colPos = enemyList[i].startingYPos;
+
+            enemyList[i].enemy = Instantiate(enemyList[i].enemy, tiles[linePos, colPos].transform.position, Quaternion.identity);
+            enemyList[i].enemy.transform.position -= new Vector3(0, 0, 1);
+            gameBoard[linePos, colPos] = enemyList[i].enemy;
+            enemyList[i].enemy.GetComponent<EnemyScript>().SetCoords(linePos, colPos);
         }
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
-        gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
+        //gameBoard[4, 3] = Instantiate(_dummy, tiles[4, 3].transform.position - new Vector3(0, 0, 2), Quaternion.identity);
     }
 
     private void GenerateGameBoard(int sizeX, int sizeY)
@@ -177,7 +194,7 @@ public class GameManager : MonoBehaviour
 
         currentEnemy = 0;
 
-        enemyScript = enemies[currentEnemy].GetComponent<EnemyScript>();
+        enemyScript = enemyList[currentEnemy].enemy.GetComponent<EnemyScript>();
 
         _heroTurn = false;
         enemyScript.StartTurn();
@@ -290,6 +307,7 @@ public class GameManager : MonoBehaviour
 
             if (gameBoard[currentLine, currentCol].tag == "Enemy")
             {
+                Debug.Log(gameBoard[currentLine, currentCol]);
                 SpawnTile(true, currentLine, currentCol);
             }
         }

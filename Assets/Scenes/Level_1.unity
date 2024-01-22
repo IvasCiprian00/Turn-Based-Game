@@ -1205,6 +1205,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621393392}
   m_CullTransparentMesh: 1
+--- !u!1 &1652645771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1652645773}
+  - component: {fileID: 1652645772}
+  m_Layer: 0
+  m_Name: Enemy Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1652645772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652645771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ddb275c93322234a9fa15f5c0658e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    xPos: 1
+    yPos: 1
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    xPos: 1
+    yPos: 2
+  _enmScript: {fileID: 0}
+  _gmManager: {fileID: 1853569549}
+--- !u!4 &1652645773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652645771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1672604907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,9 +1473,13 @@ MonoBehaviour:
   canMove: 1
   hsScript: {fileID: 0}
   _selectedEffect: {fileID: 1964376638117116823, guid: 0eb1efae59a4f2f43be6c9897dafc627, type: 3}
-  enemies:
-  - {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-  - {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+  enemyList:
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    startingXPos: 2
+    startingYPos: 1
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    startingXPos: 2
+    startingYPos: 2
   nrOfEnemies: 0
   currentEnemy: 0
   enemyScript: {fileID: 0}
@@ -2121,6 +2178,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1853569550}
   - {fileID: 489541311}
+  - {fileID: 1652645773}
   - {fileID: 1686636592}
   - {fileID: 3212158186122540136}
   - {fileID: 2733028646747225580}
