@@ -1477,10 +1477,10 @@ MonoBehaviour:
   - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
     startingXPos: 1
     startingYPos: 1
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+  - enemy: {fileID: 749542134486175175, guid: 59acb1787a3408c4dab18aa641ae1336, type: 3}
     startingXPos: 1
     startingYPos: 3
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+  - enemy: {fileID: 749542134486175175, guid: 59acb1787a3408c4dab18aa641ae1336, type: 3}
     startingXPos: 2
     startingYPos: 4
   nrOfEnemies: 0
