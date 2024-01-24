@@ -37,9 +37,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void DisplayNextLevelButton()
+    public void DisplayNextLevelButton(bool isActive)
     {
-        _nextLevelButton.SetActive(true);
+        _nextLevelButton.SetActive(isActive);
     }
 
     public void DisplayHeroStats()

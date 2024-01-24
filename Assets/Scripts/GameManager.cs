@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     }
     public void Start()
     {
+        _uiManager.DisplayNextLevelButton(false);
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
         nrOfHeroes = heroes.Length;
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         if (_levelIsOver)
         {
-            _uiManager.DisplayNextLevelButton();
+            _uiManager.DisplayNextLevelButton(true);
             return;
         }
 
