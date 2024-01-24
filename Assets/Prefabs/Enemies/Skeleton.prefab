@@ -49,7 +49,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _hsScript: {fileID: 0}
   _animator: {fileID: 3833614085085787152}
-  _hp: 2
+  _hp: 1
   _damage: 1
   _xPos: 0
   _yPos: 0

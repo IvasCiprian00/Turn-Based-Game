@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public GameManager gmManager;
 
+    [SerializeField] private GameObject _nextLevelButton;
     [SerializeField] private GameObject _endTurnButton;
     [SerializeField] private GameObject[] _activeTiles;
 
@@ -34,6 +35,11 @@ public class UIManager : MonoBehaviour
         {
             HideHeroStats();
         }
+    }
+
+    public void DisplayNextLevelButton()
+    {
+        _nextLevelButton.SetActive(true);
     }
 
     public void DisplayHeroStats()

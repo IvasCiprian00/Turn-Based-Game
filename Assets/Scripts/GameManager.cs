@@ -50,7 +50,10 @@ public class GameManager : MonoBehaviour
     public GameObject[,] tiles;
     public GameObject[,] gameBoard;
 
-
+    public void Awake()
+    {
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+    }
     public void Start()
     {
         GenerateGameBoard(numberOfLines, numberOfColumns);
@@ -65,27 +68,29 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-
-        if (!_levelIsOver)
+        if (_levelIsOver)
         {
-            CheckLevelProgress();
+            _uiManager.DisplayNextLevelButton();
+            return;
+        }
 
-            if (_heroTurn)
-            {
-                if (heroes[currentHero] != null)
-                {
-                    _effectReference.transform.position = heroes[currentHero].transform.position;
-                }
-            }
+        CheckLevelProgress();
 
-            if (speedLeft <= 0)
+        if (_heroTurn)
+        {
+            if (heroes[currentHero] != null)
             {
-                canMove = false;
+                _effectReference.transform.position = heroes[currentHero].transform.position;
             }
-            else
-            {
-                canMove = true;
-            }
+        }
+
+        if (speedLeft <= 0)
+        {
+            canMove = false;
+        }
+        else
+        {
+            canMove = true;
         }
     }
 
@@ -102,8 +107,12 @@ public class GameManager : MonoBehaviour
             _levelIsOver = true;
 
             Debug.Log("Heroes Won");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+    }
+
+    public void GoToNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void InitializeBoardElements()
