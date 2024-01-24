@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     private GameObject _effectReference;
 
     [Header("Enemy Section")]
-    //public GameObject[] enemies;
     public EnemyInfo[] enemyList;
     public int nrOfEnemies;
     public int currentEnemy;
@@ -166,6 +165,8 @@ public class GameManager : MonoBehaviour
 
             yPos -= positionIncrement;
         }
+
+        GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>().TilesLoaded();
     }
 
     public void EndTurn()
@@ -441,4 +442,9 @@ public class GameManager : MonoBehaviour
     public int GetNumberOfLines(){ return numberOfLines; }
 
     public int GetNumberOfColumns(){ return numberOfColumns; }
+
+    public GameObject GetTile(int x, int y)
+    {
+        return tiles[x, y];
+    }
 }

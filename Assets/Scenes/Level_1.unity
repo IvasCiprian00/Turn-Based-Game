@@ -1401,7 +1401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1652645772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,13 +1414,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ddb275c93322234a9fa15f5c0658e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-    xPos: 1
-    yPos: 1
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-    xPos: 1
-    yPos: 2
+  enemyList:
+  - enemy: {fileID: 749542134486175175, guid: 59acb1787a3408c4dab18aa641ae1336, type: 3}
+    startingXPos: 0
+    startingYPos: 0
+  nrOfEnemies: 1
   _enmScript: {fileID: 0}
   _gmManager: {fileID: 1853569549}
 --- !u!4 &1652645773

@@ -124,6 +124,7 @@ public class EnemyScript : MonoBehaviour
     public void UpdatePosition(int x, int y)
     {
         transform.position = _gmManager.tiles[_xPos, _yPos].transform.position;
+        Debug.Log(_gmManager.tiles);
         SetZPos(-3);
 
         _gmManager.gameBoard[x, y] = null;
