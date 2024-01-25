@@ -1416,9 +1416,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyList:
   - enemy: {fileID: 749542134486175175, guid: 59acb1787a3408c4dab18aa641ae1336, type: 3}
-    startingXPos: 0
+    startingXPos: 5
     startingYPos: 0
-  nrOfEnemies: 1
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    startingXPos: 3
+    startingYPos: 1
+  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
+    startingXPos: 3
+    startingYPos: 2
+  _enemyCount: 0
   _enmScript: {fileID: 0}
   _gmManager: {fileID: 1853569549}
 --- !u!4 &1652645773
@@ -1770,7 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8654e3d8d36a448f149cf35e7282d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enmManager: {fileID: 0}
+  _enemyManager: {fileID: 0}
   _uiManager: {fileID: 1686636588}
   _tile: {fileID: 7431743534758461160, guid: 8c523363f90489949b071798dba1a71b, type: 3}
   _moveTile: {fileID: 8632503691723713813, guid: 0568af0fca28b674fbaa5db06edcb484, type: 3}
@@ -1787,14 +1793,6 @@ MonoBehaviour:
   canMove: 1
   hsScript: {fileID: 0}
   _selectedEffect: {fileID: 1964376638117116823, guid: 0eb1efae59a4f2f43be6c9897dafc627, type: 3}
-  enemyList:
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-    startingXPos: 3
-    startingYPos: 1
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-    startingXPos: 3
-    startingYPos: 2
-  nrOfEnemies: 0
   currentEnemy: 0
   enemyScript: {fileID: 0}
 --- !u!4 &1853569550
