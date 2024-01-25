@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
     [Serializable]
     public struct EnemyInfo
@@ -14,14 +14,16 @@ public class EnemySpawner : MonoBehaviour
     }
 
     public EnemyInfo[] enemyList;
-    [SerializeField] private int nrOfEnemies;
+    [SerializeField] private int _enemyCount;
 
     [SerializeField] private EnemyScript _enmScript;
     [SerializeField] private GameManager _gmManager;
 
-    public void TilesLoaded()
+    public void SpawnEnemies()
     {
-        for (int i = 0; i < nrOfEnemies; i++)
+        _enemyCount = enemyList.Length;
+
+        for (int i = 0; i < _enemyCount; i++)
         {
             int linePos = enemyList[i].startingXPos;
             int colPos = enemyList[i].startingYPos;
@@ -29,8 +31,11 @@ public class EnemySpawner : MonoBehaviour
             enemyList[i].enemy = Instantiate(enemyList[i].enemy);
             enemyList[i].enemy.transform.position = _gmManager.GetTile(linePos, colPos).transform.position;
             enemyList[i].enemy.transform.position -= new Vector3(0, 0, 1);
-            //_gmManager.gameBoard[linePos, colPos] = enemyList[i].enemy;
+            _gmManager.gameBoard[linePos, colPos] = enemyList[i].enemy;
             enemyList[i].enemy.GetComponent<EnemyScript>().SetCoords(linePos, colPos);
         }
     }
+
+    public int GetEnemyCount() { return _enemyCount; }
+    public void SetEnemyCount(int count) { _enemyCount = count; }
 }

@@ -7,6 +7,7 @@ public class EnemyScript : MonoBehaviour
 {
 
     [SerializeField] private GameManager _gmManager;
+    [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private GameObject _target;
     [SerializeField] private HeroScript _hsScript;
 
@@ -19,10 +20,14 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private int _yPos;
     [SerializeField] private float _waitDuration = 0.2f;
 
+    public void Awake()
+    {
+        _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
+    }
     public void Start()
     {
         SetZPos(-3);
-        _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     public void StartTurn()
@@ -78,7 +83,7 @@ public class EnemyScript : MonoBehaviour
     {
         _gmManager.currentEnemy++;
 
-        if(_gmManager.currentEnemy >= _gmManager.nrOfEnemies)
+        if(_gmManager.currentEnemy >= _enemyManager.GetEnemyCount())
         {
             //Debug.Log("YEY");
             _gmManager.currentEnemy = 0;
@@ -88,7 +93,7 @@ public class EnemyScript : MonoBehaviour
             return;
         }
 
-        _gmManager.enemyList[_gmManager.currentEnemy].enemy.GetComponent<EnemyScript>().StartTurn();
+        _enemyManager.enemyList[_gmManager.currentEnemy].enemy.GetComponent<EnemyScript>().StartTurn();
     }
 
     public void Attack()
@@ -124,7 +129,6 @@ public class EnemyScript : MonoBehaviour
     public void UpdatePosition(int x, int y)
     {
         transform.position = _gmManager.tiles[_xPos, _yPos].transform.position;
-        Debug.Log(_gmManager.tiles);
         SetZPos(-3);
 
         _gmManager.gameBoard[x, y] = null;
@@ -154,7 +158,7 @@ public class EnemyScript : MonoBehaviour
 
         if(_hp <= 0)
         {
-            _gmManager.CharacterDeath(gameObject, _gmManager.enemyList, ref _gmManager.nrOfEnemies, _xPos, _yPos);// need to clear position on gameBoard
+            _gmManager.EnemyDeath(gameObject, _xPos, _yPos);
             Destroy(gameObject);
         }
 

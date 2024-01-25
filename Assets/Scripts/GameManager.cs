@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         public int startingYPos;
     }
 
+    [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private GameObject _tile;
     [SerializeField] private GameObject _moveTile;
@@ -34,8 +35,8 @@ public class GameManager : MonoBehaviour
     private GameObject _effectReference;
 
     [Header("Enemy Section")]
-    public EnemyInfo[] enemyList;
-    public int nrOfEnemies;
+    //public EnemyInfo[] enemyList;
+    //public int nrOfEnemies;
     public int currentEnemy;
     public EnemyScript enemyScript;
 
@@ -59,7 +60,6 @@ public class GameManager : MonoBehaviour
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
         nrOfHeroes = heroes.Length;
-        nrOfEnemies = enemyList.Length;
 
         InitializeBoardElements();
 
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("Heroes Lost");
         }
-        else if (nrOfEnemies == 0)
+        else if (_enemyManager.GetEnemyCount() <= 0)
         {
             _levelIsOver = true;
 
@@ -127,16 +127,8 @@ public class GameManager : MonoBehaviour
             heroes[i].transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
         }
 
-        for(int i = 0; i < nrOfEnemies; i++)
-        {
-            int linePos = enemyList[i].startingXPos;
-            int colPos = enemyList[i].startingYPos;
-
-            enemyList[i].enemy = Instantiate(enemyList[i].enemy, tiles[linePos, colPos].transform.position, Quaternion.identity);
-            enemyList[i].enemy.transform.position -= new Vector3(0, 0, 1);
-            gameBoard[linePos, colPos] = enemyList[i].enemy;
-            enemyList[i].enemy.GetComponent<EnemyScript>().SetCoords(linePos, colPos);
-        }
+        _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
+        _enemyManager.SpawnEnemies();
 
         hsScript = heroes[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
@@ -166,7 +158,6 @@ public class GameManager : MonoBehaviour
             yPos -= positionIncrement;
         }
 
-        GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>().TilesLoaded();
     }
 
     public void EndTurn()
@@ -199,7 +190,7 @@ public class GameManager : MonoBehaviour
 
         currentEnemy = 0;
 
-        enemyScript = enemyList[currentEnemy].enemy.GetComponent<EnemyScript>();
+        enemyScript = _enemyManager.enemyList[currentEnemy].enemy.GetComponent<EnemyScript>();
 
         _heroTurn = false;
         enemyScript.StartTurn();
@@ -402,30 +393,30 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void CharacterDeath(GameObject deadChar, EnemyInfo[] charArray, ref int nrOfCharacters, int posX, int posY)
+    public void EnemyDeath(GameObject deadChar, int posX, int posY)
     {
         gameBoard[posX, posY] = null;
 
-        for (int i = 0; i < nrOfCharacters; i++)
+        for (int i = 0; i < _enemyManager.GetEnemyCount(); i++)
         {
-            if (deadChar == charArray[i].enemy)
+            if (deadChar == _enemyManager.enemyList[i].enemy)
             {
-                RemoveDeadChar(i, charArray, nrOfCharacters);
+                _enemyManager.SetEnemyCount(_enemyManager.GetEnemyCount() - 1);
 
-                nrOfCharacters--;
+                RemoveDeadChar(i);
 
                 return;
             }
         }
     }
 
-    public void RemoveDeadChar(int index, EnemyInfo[] array, int charNumber)
+    public void RemoveDeadChar(int index)
     {
-        for (int i = index; i < charNumber - 1; i++)
+        for (int i = index; i < _enemyManager.GetEnemyCount(); i++)
         {
-            array[i].enemy = array[i + 1].enemy;
-            array[i].startingXPos = array[i + 1].startingXPos;
-            array[i].startingYPos = array[i + 1].startingYPos;
+            _enemyManager.enemyList[i].enemy = _enemyManager.enemyList[i + 1].enemy;
+            _enemyManager.enemyList[i].startingXPos = _enemyManager.enemyList[i + 1].startingXPos;
+            _enemyManager.enemyList[i].startingYPos = _enemyManager.enemyList[i + 1].startingYPos;
         }
     }
 
