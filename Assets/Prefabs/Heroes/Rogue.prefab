@@ -52,8 +52,11 @@ MonoBehaviour:
   _maxHp: 10
   _damage: 1
   _speed: 2
+  _nrOfAttacks: 1
   skills: []
   _movementType: basic
+  _attackType: mixed
+  _range: 2
   gmManager: {fileID: 0}
 --- !u!1 &6488466722216267730
 GameObject:

@@ -17,7 +17,12 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int _enemyCount;
 
     [SerializeField] private EnemyScript _enmScript;
-    [SerializeField] private GameManager _gmManager;
+    [SerializeField] private GameManager _gameManager;
+
+    public void Awake()
+    {
+        _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    }
 
     public void SpawnEnemies()
     {
@@ -29,9 +34,9 @@ public class EnemyManager : MonoBehaviour
             int colPos = enemyList[i].startingYPos;
 
             enemyList[i].enemy = Instantiate(enemyList[i].enemy);
-            enemyList[i].enemy.transform.position = _gmManager.GetTile(linePos, colPos).transform.position;
+            enemyList[i].enemy.transform.position = _gameManager.GetTile(linePos, colPos).transform.position;
             enemyList[i].enemy.transform.position -= new Vector3(0, 0, 1);
-            _gmManager.gameBoard[linePos, colPos] = enemyList[i].enemy;
+            _gameManager.gameBoard[linePos, colPos] = enemyList[i].enemy;
             enemyList[i].enemy.GetComponent<EnemyScript>().SetCoords(linePos, colPos);
         }
     }

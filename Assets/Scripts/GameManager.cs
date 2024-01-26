@@ -9,14 +9,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [Serializable] public struct EnemyInfo
-    {
-        public GameObject enemy;
-        public int startingXPos;
-        public int startingYPos;
-    }
-
-    [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private GameObject _tile;
     [SerializeField] private GameObject _moveTile;
@@ -24,6 +16,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Hero Section")]
+    [SerializeField] private HeroManager _heroManager;
     public GameObject[] heroes;
     public int nrOfHeroes;
     public int currentHero;
@@ -35,8 +28,7 @@ public class GameManager : MonoBehaviour
     private GameObject _effectReference;
 
     [Header("Enemy Section")]
-    //public EnemyInfo[] enemyList;
-    //public int nrOfEnemies;
+    [SerializeField] private EnemyManager _enemyManager;
     public int currentEnemy;
     public EnemyScript enemyScript;
 
@@ -117,6 +109,9 @@ public class GameManager : MonoBehaviour
 
     private void InitializeBoardElements()
     {
+        _heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
+        _heroManager.SpawnHeroes();
+
         for (int i = 0; i < nrOfHeroes; i++)
         {
             int linePos = 5;
