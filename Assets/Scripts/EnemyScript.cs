@@ -8,6 +8,7 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private GameManager _gmManager;
     [SerializeField] private EnemyManager _enemyManager;
+    [SerializeField] private HeroManager _heroManager;
     [SerializeField] private GameObject _target;
     [SerializeField] private HeroScript _hsScript;
 
@@ -24,6 +25,7 @@ public class EnemyScript : MonoBehaviour
     {
         _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
+        _heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
     }
     public void Start()
     {
@@ -52,15 +54,15 @@ public class EnemyScript : MonoBehaviour
     {
         int minDistance = 99;
 
-        for(int i = 0; i < _gmManager.heroes.Length; i++)
+        for(int i = 0; i < _heroManager.GetHeroCount(); i++)
         {
-            HeroScript hsScript = _gmManager.heroes[i].GetComponent<HeroScript>();
+            HeroScript hsScript = _heroManager.heroList[i].hero.GetComponent<HeroScript>();
             int distance = Mathf.Abs(_xPos - hsScript.GetXPos()) + Mathf.Abs(_yPos - hsScript.GetYPos());
 
             if(distance < minDistance)
             {
                 minDistance = distance;
-                _target = _gmManager.heroes[i];
+                _target = _heroManager.heroList[i].hero;
             }
         }
 

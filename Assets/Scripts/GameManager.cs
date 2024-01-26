@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Hero Section")]
     [SerializeField] private HeroManager _heroManager;
-    public GameObject[] heroes;
-    public int nrOfHeroes;
+    //public GameObject[] heroes;
+    //public int nrOfHeroes;
     public int currentHero;
     public int speedLeft;
     public int attacksLeft;
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         _uiManager.DisplayNextLevelButton(false);
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
-        nrOfHeroes = heroes.Length;
+        //nrOfHeroes = heroes.Length;
 
         InitializeBoardElements();
 
@@ -70,9 +70,9 @@ public class GameManager : MonoBehaviour
 
         if (_heroTurn)
         {
-            if (heroes[currentHero] != null)
+            if (_heroManager.heroList[currentHero].hero != null)
             {
-                _effectReference.transform.position = heroes[currentHero].transform.position;
+                _effectReference.transform.position = _heroManager.heroList[currentHero].hero.transform.position;
             }
         }
 
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckLevelProgress()
     {
-        if(nrOfHeroes == 0)
+        if(_heroManager.GetHeroCount() == 0)
         {
             _levelIsOver = true;
 
@@ -112,20 +112,20 @@ public class GameManager : MonoBehaviour
         _heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
         _heroManager.SpawnHeroes();
 
-        for (int i = 0; i < nrOfHeroes; i++)
+        /*for (int i = 0; i < _heroManager.GetHeroCount(); i++)
         {
             int linePos = 5;
             int colPos = i + 1;
 
-            heroes[i].GetComponent<HeroScript>().SetCoords(linePos, colPos);
-            gameBoard[linePos, colPos] = heroes[i];
-            heroes[i].transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
-        }
+            _heroManager.heroList[i].hero.GetComponent<HeroScript>().SetCoords(linePos, colPos);
+            gameBoard[linePos, colPos] = _heroManager.heroList[i].hero;
+            _heroManager.heroList[i].hero.transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
+        }*/
 
         _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
         _enemyManager.SpawnEnemies();
 
-        hsScript = heroes[currentHero].GetComponent<HeroScript>();
+        hsScript = _heroManager.heroList[currentHero].hero.GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
     }
 
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         _uiManager.CancelSkill();
         currentHero++;
 
-        if(currentHero >= nrOfHeroes || currentHero == -1)
+        if(currentHero >= _heroManager.GetHeroCount() || currentHero == -1)
         {
             currentHero = 0;
 
@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        hsScript = heroes[currentHero].GetComponent<HeroScript>();
+        hsScript = _heroManager.heroList[currentHero].hero.GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
         attacksLeft = hsScript.GetSpeed();
 
@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
         _heroTurn = true;
         _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
 
-        hsScript = heroes[currentHero].GetComponent<HeroScript>();
+        hsScript = _heroManager.heroList[currentHero].hero.GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
         attacksLeft = hsScript.GetNumberOfAttacks();
 
@@ -362,28 +362,30 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void CharacterDeath(GameObject deadChar, GameObject[] charArray, ref int nrOfCharacters, int posX, int posY)
+    public void CharacterDeath(GameObject deadChar, int posX, int posY)
     {
         gameBoard[posX, posY] = null;
 
-        for(int i = 0; i < nrOfCharacters; i++) 
+        for(int i = 0; i < _heroManager.GetHeroCount(); i++) 
         {
-            if(deadChar == charArray[i])
+            if(deadChar == _heroManager.heroList[i].hero)
             {
-                RemoveDeadChar(i, charArray, nrOfCharacters);
+                _heroManager.SetHeroCount(_heroManager.GetHeroCount() - 1);
 
-                nrOfCharacters--;
+                RemoveDeadHero(i);
 
                 return;
             }
         }
     }
 
-    public void RemoveDeadChar(int index, GameObject[] array, int charNumber)
+    public void RemoveDeadHero(int index)
     {
-        for(int i = index; i < charNumber - 1; i++)
+        for(int i = index; i < _heroManager.GetHeroCount(); i++)
         {
-            array[i] = array[i + 1];
+            _heroManager.heroList[i].hero = _heroManager.heroList[i + 1].hero;
+            _heroManager.heroList[i].startingXPos = _heroManager.heroList[i + 1].startingXPos;
+            _heroManager.heroList[i].startingYPos = _heroManager.heroList[i + 1].startingYPos;
         }
 
     }
@@ -398,14 +400,14 @@ public class GameManager : MonoBehaviour
             {
                 _enemyManager.SetEnemyCount(_enemyManager.GetEnemyCount() - 1);
 
-                RemoveDeadChar(i);
+                RemoveDeadEnemy(i);
 
                 return;
             }
         }
     }
 
-    public void RemoveDeadChar(int index)
+    public void RemoveDeadEnemy(int index)
     {
         for (int i = index; i < _enemyManager.GetEnemyCount(); i++)
         {

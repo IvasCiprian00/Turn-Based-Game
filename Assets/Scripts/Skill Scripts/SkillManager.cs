@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class SkillManager : MonoBehaviour
 {
     public GameManager gmManager;
-
     public UIManager uiManager;
+    public HeroManager heroManager;
 
     public GameObject selectTile;
 
@@ -17,6 +17,7 @@ public class SkillManager : MonoBehaviour
     {
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
     }
 
     public void UseSkill(string skillName)
@@ -60,9 +61,9 @@ public class SkillManager : MonoBehaviour
 
     public void GlobalHeal()
     {
-        for(int i = 0; i < gmManager.heroes.Length; i++)
+        for(int i = 0; i < heroManager.GetHeroCount(); i++)
         {
-            HeroScript hsScript = gmManager.heroes[i].GetComponent<HeroScript>();
+            HeroScript hsScript = heroManager.heroList[i].hero.GetComponent<HeroScript>();
 
             if (hsScript != null)
             {
@@ -93,7 +94,7 @@ public class SkillManager : MonoBehaviour
 
     public void SpawnGreatStrikeTiles()
     {
-        HeroScript hsScript = gmManager.heroes[gmManager.currentHero].GetComponent<HeroScript>();
+        HeroScript hsScript = heroManager.heroList[gmManager.currentHero].hero.GetComponent<HeroScript>();
 
         int xPos = hsScript.GetXPos();
         int yPos = hsScript.GetYPos();

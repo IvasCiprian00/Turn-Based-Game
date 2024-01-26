@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveTileScript : MonoBehaviour
 {
     public GameManager gmManager;
+    public HeroManager heroManager;
     private bool _attackTile;
 
     [SerializeField] private Sprite _attackTileSprite;
@@ -15,6 +16,7 @@ public class MoveTileScript : MonoBehaviour
     public void Start()
     {
         gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
     }
 
     public void SetCoords(int x, int y)
@@ -25,7 +27,7 @@ public class MoveTileScript : MonoBehaviour
 
     public void OnMouseUp()
     {
-        HeroScript hsScript = gmManager.heroes[gmManager.currentHero].GetComponent<HeroScript>();
+        HeroScript hsScript = heroManager.heroList[gmManager.currentHero].hero.GetComponent<HeroScript>();
         int pastXPos = hsScript.GetXPos();
         int pastYPos = hsScript.GetYPos();
 
@@ -45,10 +47,10 @@ public class MoveTileScript : MonoBehaviour
 
         gmManager.gameBoard[pastXPos, pastYPos] = null;
 
-        gmManager.heroes[gmManager.currentHero].transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 2f);
+        heroManager.heroList[gmManager.currentHero].hero.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 2f);
 
         hsScript.SetCoords(_xPos, _yPos);
-        gmManager.gameBoard[_xPos, _yPos] = gmManager.heroes[gmManager.currentHero];
+        gmManager.gameBoard[_xPos, _yPos] = heroManager.heroList[gmManager.currentHero].hero;
         gmManager.GenerateMoveTiles();
     }
 
