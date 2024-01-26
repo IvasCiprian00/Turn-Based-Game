@@ -87,7 +87,6 @@ public class EnemyScript : MonoBehaviour
 
         if(_gmManager.currentEnemy >= _enemyManager.GetEnemyCount())
         {
-            //Debug.Log("YEY");
             _gmManager.currentEnemy = 0;
 
             _gmManager.StartHeroTurns();

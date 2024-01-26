@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Hero Section")]
     [SerializeField] private HeroManager _heroManager;
-    //public GameObject[] heroes;
-    //public int nrOfHeroes;
     public int currentHero;
     public int speedLeft;
     public int attacksLeft;
@@ -49,9 +47,8 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         _uiManager.DisplayNextLevelButton(false);
-        GenerateGameBoard(numberOfLines, numberOfColumns);
 
-        //nrOfHeroes = heroes.Length;
+        GenerateGameBoard(numberOfLines, numberOfColumns);
 
         InitializeBoardElements();
 
@@ -104,23 +101,14 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+        //Try to change this to additive and in the new scenes we only have the Enemy Manage, maybe the Hero Manager but we can just call it to spawn the heroes again
     }
 
     private void InitializeBoardElements()
     {
         _heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
         _heroManager.SpawnHeroes();
-
-        /*for (int i = 0; i < _heroManager.GetHeroCount(); i++)
-        {
-            int linePos = 5;
-            int colPos = i + 1;
-
-            _heroManager.heroList[i].hero.GetComponent<HeroScript>().SetCoords(linePos, colPos);
-            gameBoard[linePos, colPos] = _heroManager.heroList[i].hero;
-            _heroManager.heroList[i].hero.transform.position = new Vector3(tiles[linePos, colPos].transform.position.x, tiles[linePos, colPos].transform.position.y, tiles[linePos, colPos].transform.position.z - 1f);
-        }*/
 
         _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
         _enemyManager.SpawnEnemies();
