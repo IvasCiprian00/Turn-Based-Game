@@ -543,50 +543,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &313387305
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 313387306}
-  - component: {fileID: 313387307}
-  m_Layer: 0
-  m_Name: Keep Objects Container
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &313387306
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313387305}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &313387307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313387305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81f45d8a29d4d77478928726340bdd7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &485498219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,60 +1325,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621393392}
   m_CullTransparentMesh: 1
---- !u!1 &1652645771
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1652645773}
-  - component: {fileID: 1652645772}
-  m_Layer: 0
-  m_Name: Enemy Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1652645772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652645771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ddb275c93322234a9fa15f5c0658e82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyList:
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-    startingXPos: 5
-    startingYPos: 0
-  - enemy: {fileID: 3863906531383838193, guid: 6a1b8823347699d4f897d971f66ca6e8, type: 3}
-    startingXPos: 3
-    startingYPos: 1
-  _enemyCount: 0
-  _enmScript: {fileID: 0}
-  _gameManager: {fileID: 0}
---- !u!4 &1652645773
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652645771}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1672604907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,6 +1663,7 @@ MonoBehaviour:
   _tile: {fileID: 7431743534758461160, guid: 8c523363f90489949b071798dba1a71b, type: 3}
   _moveTile: {fileID: 8632503691723713813, guid: 0568af0fca28b674fbaa5db06edcb484, type: 3}
   _dummy: {fileID: 4229422040891881825, guid: 5c7a2a0f7acf44748be73a64bb49c02c, type: 3}
+  _levelNumber: 0
   _heroManager: {fileID: 0}
   currentHero: 0
   speedLeft: 0
@@ -1771,6 +1674,7 @@ MonoBehaviour:
   _enemyManager: {fileID: 0}
   currentEnemy: 0
   enemyScript: {fileID: 0}
+  _gameOver: 0
 --- !u!4 &1853569550
 Transform:
   m_ObjectHideFlags: 0
@@ -2201,10 +2105,8 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1853569550}
   - {fileID: 489541311}
-  - {fileID: 1652645773}
   - {fileID: 1877780860}
   - {fileID: 246881428}
   - {fileID: 1686636592}
   - {fileID: 626417925}
   - {fileID: 1137836258}
-  - {fileID: 313387306}

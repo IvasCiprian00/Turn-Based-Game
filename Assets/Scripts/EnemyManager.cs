@@ -45,12 +45,6 @@ public class EnemyManager : MonoBehaviour
             enemiesAlive[i].transform.position -= new Vector3(0, 0, 1);
             _gameManager.gameBoard[linePos, colPos] = enemiesAlive[i];
             enemiesAlive[i].GetComponent<EnemyScript>().SetCoords(linePos, colPos);
-            /*
-            enemyList[i].enemy = Instantiate(enemyList[i].enemy);
-            enemyList[i].enemy.transform.position = _gameManager.GetTile(linePos, colPos).transform.position;
-            enemyList[i].enemy.transform.position -= new Vector3(0, 0, 1);
-            _gameManager.gameBoard[linePos, colPos] = enemyList[i].enemy;
-            enemyList[i].enemy.GetComponent<EnemyScript>().SetCoords(linePos, colPos);*/
         }
     }
 

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private bool _heroTurn = true;
     private bool _attacking = false;
-    private bool _levelOver = false;
+    [SerializeField] private bool _gameOver = false;
     private bool _sceneLoaded = false;
 
     public GameObject[,] tiles;
@@ -47,18 +47,20 @@ public class GameManager : MonoBehaviour
     }
     public void Start()
     {
-        SceneManager.LoadScene(_levelNumber + 1, LoadSceneMode.Additive);
-
         _levelNumber++;
+        SceneManager.LoadScene(_levelNumber, LoadSceneMode.Additive);
+
         _uiManager.DisplayNextLevelButton(false);
 
         GenerateGameBoard(numberOfLines, numberOfColumns);
+
+        InitializeHeroes();
 
     }
 
     public void Update()
     {
-        if (_levelOver)
+        if (_gameOver)
         {
             _uiManager.DisplayNextLevelButton(true);
             return;
@@ -69,11 +71,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        CheckLevelProgress();
+        _uiManager.DisplayNextLevelButton(false);
+
+        //CheckLevelProgress();
 
         if (_heroTurn)
         {
-            if (_heroManager.heroList[currentHero].hero != null)
+            if (_heroManager.heroesAlive[currentHero] != null)
             {
                 _effectReference.transform.position = _heroManager.heroesAlive[currentHero].transform.position;
             }
@@ -91,7 +95,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelLoaded()
     {
-        InitializeBoardElements();
+        InitializeEnemies();
 
         StartHeroTurns();
 
@@ -100,16 +104,16 @@ public class GameManager : MonoBehaviour
 
     public void CheckLevelProgress()
     {
-        if(_heroManager.GetHeroCount() == 0)
+        if(_heroManager.GetHeroCount() <= 0)
         {
-            _levelOver = true;
+            _gameOver = true;
 
             Debug.Log("Heroes Lost");
         }
 
         else if (_enemyManager.GetEnemyCount() <= 0)
         {
-            _levelOver = true;
+            _gameOver = true;
 
             Debug.Log("Heroes Won");
         }
@@ -117,29 +121,44 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Level_" + _levelNumber);
+
+        _levelNumber++;
+
+        SceneManager.LoadScene(_levelNumber, LoadSceneMode.Additive);
 
         ResetBoard();
-        //Try to change this to additive and in the new scenes we only have the Enemy Manage, maybe the Hero Manager but we can just call it to spawn the heroes again
     }
 
     public void ResetBoard()
     {
-        _heroManager.SpawnHeroes();
+        ResetHeroes();
 
-        _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
-        _enemyManager.SpawnEnemies();
+        _gameOver = false;
 
-        _levelOver = false;
+        _uiManager.DisplayNextLevelButton(false);
     }
 
-    private void InitializeBoardElements()
+    public void ResetHeroes()
+    {
+        for(int i = 0; i < _heroManager.heroesAlive.Length; i++)
+        {
+            Destroy(_heroManager.heroesAlive[i]);
+        }
+
+        _heroManager.SpawnHeroes();
+    }
+
+    private void InitializeEnemies()
+    {
+        _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
+        _enemyManager.SpawnEnemies();
+    }
+
+    public void InitializeHeroes()
     {
         _heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
         _heroManager.SpawnHeroes();
-
-        _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
-        _enemyManager.SpawnEnemies();
 
         hsScript = _heroManager.heroesAlive[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
@@ -387,6 +406,7 @@ public class GameManager : MonoBehaviour
             if(deadChar == _heroManager.heroesAlive[i])
             {
                 _heroManager.SetHeroCount(_heroManager.GetHeroCount() - 1);
+                CheckLevelProgress();
 
                 RemoveDeadHero(i);
 
@@ -400,9 +420,6 @@ public class GameManager : MonoBehaviour
         for(int i = index; i < _heroManager.GetHeroCount(); i++)
         {
             _heroManager.heroesAlive[i] = _heroManager.heroesAlive[i + 1];
-            /*_heroManager.heroList[i].hero = _heroManager.heroList[i + 1].hero;
-            _heroManager.heroList[i].startingXPos = _heroManager.heroList[i + 1].startingXPos;
-            _heroManager.heroList[i].startingYPos = _heroManager.heroList[i + 1].startingYPos;*/
         }
 
     }
@@ -416,6 +433,7 @@ public class GameManager : MonoBehaviour
             if (deadChar == _enemyManager.enemiesAlive[i])
             {
                 _enemyManager.SetEnemyCount(_enemyManager.GetEnemyCount() - 1);
+                CheckLevelProgress();
 
                 RemoveDeadEnemy(i);
 
