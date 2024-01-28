@@ -49,8 +49,16 @@ public class HeroScript : MonoBehaviour
 
         if (_hp <= 0 )
         {
-            gmManager.CharacterDeath(gameObject, _xPos, _yPos);
+            gmManager.HeroDeath(gameObject, _xPos, _yPos);
             Destroy(gameObject);
+        }
+    }
+
+    public void StartWinAniamtion()
+    {
+        if(_animator != null)
+        {
+            _animator.SetTrigger("level_complete");
         }
     }
 

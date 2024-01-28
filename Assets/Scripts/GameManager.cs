@@ -73,8 +73,6 @@ public class GameManager : MonoBehaviour
 
         _uiManager.DisplayNextLevelButton(false);
 
-        //CheckLevelProgress();
-
         if (_heroTurn)
         {
             if (_heroManager.heroesAlive[currentHero] != null)
@@ -114,6 +112,11 @@ public class GameManager : MonoBehaviour
         else if (_enemyManager.GetEnemyCount() <= 0)
         {
             _gameOver = true;
+
+            for (int i = 0; i < _heroManager.GetHeroCount(); i++)
+            {
+                _heroManager.heroesAlive[i].GetComponent<HeroScript>().StartWinAniamtion();
+            }
 
             Debug.Log("Heroes Won");
         }
@@ -397,7 +400,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void CharacterDeath(GameObject deadChar, int posX, int posY)
+    public void HeroDeath(GameObject deadChar, int posX, int posY)
     {
         gameBoard[posX, posY] = null;
 
@@ -406,6 +409,7 @@ public class GameManager : MonoBehaviour
             if(deadChar == _heroManager.heroesAlive[i])
             {
                 _heroManager.SetHeroCount(_heroManager.GetHeroCount() - 1);
+
                 CheckLevelProgress();
 
                 RemoveDeadHero(i);
