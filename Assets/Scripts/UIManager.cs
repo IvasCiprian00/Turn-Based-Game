@@ -50,8 +50,11 @@ public class UIManager : MonoBehaviour
             _endTurnButton.SetActive(true);
         }
 
-        _hpText.text = gmManager.hsScript.GetHp().ToString();
-        _dmgText.text = gmManager.hsScript.GetDamage().ToString();
+        if(gmManager.IsSceneLoaded())
+        {
+            _hpText.text = gmManager.hsScript.GetHp().ToString();
+            _dmgText.text = gmManager.hsScript.GetDamage().ToString();
+        }
     }
 
     public void HideHeroStats()

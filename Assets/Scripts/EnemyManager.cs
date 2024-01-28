@@ -24,6 +24,11 @@ public class EnemyManager : MonoBehaviour
         _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
+    public void Start()
+    {
+        _gameManager.LevelLoaded();
+    }
+
     public void SpawnEnemies()
     {
         _enemyCount = enemyList.Length;

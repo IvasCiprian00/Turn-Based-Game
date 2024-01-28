@@ -35,7 +35,8 @@ public class GameManager : MonoBehaviour
 
     private bool _heroTurn = true;
     private bool _attacking = false;
-    private bool _levelIsOver = false;
+    private bool _levelOver = false;
+    private bool _sceneLoaded = false;
 
     public GameObject[,] tiles;
     public GameObject[,] gameBoard;
@@ -46,20 +47,24 @@ public class GameManager : MonoBehaviour
     }
     public void Start()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+
         _uiManager.DisplayNextLevelButton(false);
 
         GenerateGameBoard(numberOfLines, numberOfColumns);
 
-        InitializeBoardElements();
-
-        StartHeroTurns();
     }
 
     public void Update()
     {
-        if (_levelIsOver)
+        if (_levelOver)
         {
             _uiManager.DisplayNextLevelButton(true);
+            return;
+        }
+
+        if(!_sceneLoaded)
+        {
             return;
         }
 
@@ -69,7 +74,7 @@ public class GameManager : MonoBehaviour
         {
             if (_heroManager.heroList[currentHero].hero != null)
             {
-                _effectReference.transform.position = _heroManager.heroList[currentHero].hero.transform.position;
+                _effectReference.transform.position = _heroManager.heroesAlive[currentHero].transform.position;
             }
         }
 
@@ -83,17 +88,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void LevelLoaded()
+    {
+        InitializeBoardElements();
+
+        StartHeroTurns();
+
+        _sceneLoaded = true;
+    }
+
     public void CheckLevelProgress()
     {
         if(_heroManager.GetHeroCount() == 0)
         {
-            _levelIsOver = true;
+            _levelOver = true;
 
             Debug.Log("Heroes Lost");
         }
+
         else if (_enemyManager.GetEnemyCount() <= 0)
         {
-            _levelIsOver = true;
+            _levelOver = true;
 
             Debug.Log("Heroes Won");
         }
@@ -102,7 +117,19 @@ public class GameManager : MonoBehaviour
     public void GoToNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+
+        ResetBoard();
         //Try to change this to additive and in the new scenes we only have the Enemy Manage, maybe the Hero Manager but we can just call it to spawn the heroes again
+    }
+
+    public void ResetBoard()
+    {
+        _heroManager.SpawnHeroes();
+
+        _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
+        _enemyManager.SpawnEnemies();
+
+        _levelOver = false;
     }
 
     private void InitializeBoardElements()
@@ -424,4 +451,6 @@ public class GameManager : MonoBehaviour
     {
         return tiles[x, y];
     }
+
+    public bool IsSceneLoaded() { return _sceneLoaded; }
 }
