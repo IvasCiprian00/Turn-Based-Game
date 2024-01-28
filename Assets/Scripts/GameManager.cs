@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _tile;
     [SerializeField] private GameObject _moveTile;
     [SerializeField] private GameObject _dummy;
-
+    [SerializeField] private int _levelNumber;
 
     [Header("Hero Section")]
     [SerializeField] private HeroManager _heroManager;
@@ -47,8 +47,9 @@ public class GameManager : MonoBehaviour
     }
     public void Start()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+        SceneManager.LoadScene(_levelNumber + 1, LoadSceneMode.Additive);
 
+        _levelNumber++;
         _uiManager.DisplayNextLevelButton(false);
 
         GenerateGameBoard(numberOfLines, numberOfColumns);
@@ -200,7 +201,7 @@ public class GameManager : MonoBehaviour
 
         currentEnemy = 0;
 
-        enemyScript = _enemyManager.enemyList[currentEnemy].enemy.GetComponent<EnemyScript>();
+        enemyScript = _enemyManager.enemiesAlive[currentEnemy].GetComponent<EnemyScript>();
 
         _heroTurn = false;
         enemyScript.StartTurn();
@@ -412,7 +413,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < _enemyManager.GetEnemyCount(); i++)
         {
-            if (deadChar == _enemyManager.enemyList[i].enemy)
+            if (deadChar == _enemyManager.enemiesAlive[i])
             {
                 _enemyManager.SetEnemyCount(_enemyManager.GetEnemyCount() - 1);
 
@@ -427,9 +428,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = index; i < _enemyManager.GetEnemyCount(); i++)
         {
-            _enemyManager.enemyList[i].enemy = _enemyManager.enemyList[i + 1].enemy;
-            _enemyManager.enemyList[i].startingXPos = _enemyManager.enemyList[i + 1].startingXPos;
-            _enemyManager.enemyList[i].startingYPos = _enemyManager.enemyList[i + 1].startingYPos;
+            _enemyManager.enemiesAlive[i] = _enemyManager.enemiesAlive[i  + 1];
         }
     }
 

@@ -14,6 +14,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     public EnemyInfo[] enemyList;
+    public GameObject[] enemiesAlive;
     [SerializeField] private int _enemyCount;
 
     [SerializeField] private EnemyScript _enmScript;
@@ -32,17 +33,24 @@ public class EnemyManager : MonoBehaviour
     public void SpawnEnemies()
     {
         _enemyCount = enemyList.Length;
+        enemiesAlive = new GameObject[_enemyCount];
 
         for (int i = 0; i < _enemyCount; i++)
         {
             int linePos = enemyList[i].startingXPos;
             int colPos = enemyList[i].startingYPos;
 
+            enemiesAlive[i] = Instantiate(enemyList[i].enemy);
+            enemiesAlive[i].transform.position = _gameManager.GetTile(linePos, colPos).transform.position;
+            enemiesAlive[i].transform.position -= new Vector3(0, 0, 1);
+            _gameManager.gameBoard[linePos, colPos] = enemiesAlive[i];
+            enemiesAlive[i].GetComponent<EnemyScript>().SetCoords(linePos, colPos);
+            /*
             enemyList[i].enemy = Instantiate(enemyList[i].enemy);
             enemyList[i].enemy.transform.position = _gameManager.GetTile(linePos, colPos).transform.position;
             enemyList[i].enemy.transform.position -= new Vector3(0, 0, 1);
             _gameManager.gameBoard[linePos, colPos] = enemyList[i].enemy;
-            enemyList[i].enemy.GetComponent<EnemyScript>().SetCoords(linePos, colPos);
+            enemyList[i].enemy.GetComponent<EnemyScript>().SetCoords(linePos, colPos);*/
         }
     }
 

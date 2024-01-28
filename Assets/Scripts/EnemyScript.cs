@@ -94,7 +94,7 @@ public class EnemyScript : MonoBehaviour
             return;
         }
 
-        _enemyManager.enemyList[_gmManager.currentEnemy].enemy.GetComponent<EnemyScript>().StartTurn();
+        _enemyManager.enemiesAlive[_gmManager.currentEnemy].GetComponent<EnemyScript>().StartTurn();
     }
 
     public void Attack()
