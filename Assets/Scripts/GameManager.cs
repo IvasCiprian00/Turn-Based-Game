@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
         _enemyManager.SpawnEnemies();
 
-        hsScript = _heroManager.heroList[currentHero].hero.GetComponent<HeroScript>();
+        hsScript = _heroManager.heroesAlive[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
     }
 
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        hsScript = _heroManager.heroList[currentHero].hero.GetComponent<HeroScript>();
+        hsScript = _heroManager.heroesAlive[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
         attacksLeft = hsScript.GetSpeed();
 
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
         _heroTurn = true;
         _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
 
-        hsScript = _heroManager.heroList[currentHero].hero.GetComponent<HeroScript>();
+        hsScript = _heroManager.heroesAlive[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
         attacksLeft = hsScript.GetNumberOfAttacks();
 
@@ -356,7 +356,7 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < _heroManager.GetHeroCount(); i++) 
         {
-            if(deadChar == _heroManager.heroList[i].hero)
+            if(deadChar == _heroManager.heroesAlive[i])
             {
                 _heroManager.SetHeroCount(_heroManager.GetHeroCount() - 1);
 
@@ -371,9 +371,10 @@ public class GameManager : MonoBehaviour
     {
         for(int i = index; i < _heroManager.GetHeroCount(); i++)
         {
-            _heroManager.heroList[i].hero = _heroManager.heroList[i + 1].hero;
+            _heroManager.heroesAlive[i] = _heroManager.heroesAlive[i + 1];
+            /*_heroManager.heroList[i].hero = _heroManager.heroList[i + 1].hero;
             _heroManager.heroList[i].startingXPos = _heroManager.heroList[i + 1].startingXPos;
-            _heroManager.heroList[i].startingYPos = _heroManager.heroList[i + 1].startingYPos;
+            _heroManager.heroList[i].startingYPos = _heroManager.heroList[i + 1].startingYPos;*/
         }
 
     }

@@ -56,13 +56,13 @@ public class EnemyScript : MonoBehaviour
 
         for(int i = 0; i < _heroManager.GetHeroCount(); i++)
         {
-            HeroScript hsScript = _heroManager.heroList[i].hero.GetComponent<HeroScript>();
+            HeroScript hsScript = _heroManager.heroesAlive[i].GetComponent<HeroScript>();
             int distance = Mathf.Abs(_xPos - hsScript.GetXPos()) + Mathf.Abs(_yPos - hsScript.GetYPos());
 
             if(distance < minDistance)
             {
                 minDistance = distance;
-                _target = _heroManager.heroList[i].hero;
+                _target = _heroManager.heroesAlive[i];
             }
         }
 

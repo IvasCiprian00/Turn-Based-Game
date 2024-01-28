@@ -63,7 +63,7 @@ public class SkillManager : MonoBehaviour
     {
         for(int i = 0; i < heroManager.GetHeroCount(); i++)
         {
-            HeroScript hsScript = heroManager.heroList[i].hero.GetComponent<HeroScript>();
+            HeroScript hsScript = heroManager.heroesAlive[i].GetComponent<HeroScript>();
 
             if (hsScript != null)
             {
@@ -94,7 +94,7 @@ public class SkillManager : MonoBehaviour
 
     public void SpawnGreatStrikeTiles()
     {
-        HeroScript hsScript = heroManager.heroList[gmManager.currentHero].hero.GetComponent<HeroScript>();
+        HeroScript hsScript = heroManager.heroesAlive[gmManager.currentHero].GetComponent<HeroScript>();
 
         int xPos = hsScript.GetXPos();
         int yPos = hsScript.GetYPos();

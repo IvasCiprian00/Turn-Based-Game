@@ -27,7 +27,7 @@ public class MoveTileScript : MonoBehaviour
 
     public void OnMouseUp()
     {
-        HeroScript hsScript = heroManager.heroList[gmManager.currentHero].hero.GetComponent<HeroScript>();
+        HeroScript hsScript = heroManager.heroesAlive[gmManager.currentHero].GetComponent<HeroScript>();
         int pastXPos = hsScript.GetXPos();
         int pastYPos = hsScript.GetYPos();
 
@@ -47,10 +47,10 @@ public class MoveTileScript : MonoBehaviour
 
         gmManager.gameBoard[pastXPos, pastYPos] = null;
 
-        heroManager.heroList[gmManager.currentHero].hero.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 2f);
+        heroManager.heroesAlive[gmManager.currentHero].transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 2f);
 
         hsScript.SetCoords(_xPos, _yPos);
-        gmManager.gameBoard[_xPos, _yPos] = heroManager.heroList[gmManager.currentHero].hero;
+        gmManager.gameBoard[_xPos, _yPos] = heroManager.heroesAlive[gmManager.currentHero];
         gmManager.GenerateMoveTiles();
     }
 
