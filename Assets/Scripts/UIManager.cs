@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject _nextLevelButton;
     [SerializeField] private GameObject _endTurnButton;
+    [SerializeField] private GameObject _skillsContainer;
     [SerializeField] private GameObject[] _activeTiles;
 
     [Header("Skills")]
@@ -27,7 +28,7 @@ public class UIManager : MonoBehaviour
 
     public void Update()
     {
-        if (gmManager.IsHeroTurn())
+        if (gmManager.IsHeroTurn() && !gmManager.IsGameOver())
         {
             DisplayHeroStats();
         }
@@ -68,6 +69,8 @@ public class UIManager : MonoBehaviour
 
     public void DisplaySkills(GameObject[] skills)
     {
+        _skillsContainer.SetActive(true);
+
         int currentSkillSlot = 0;
 
         _skillReference = new GameObject[skills.Length];
@@ -80,7 +83,7 @@ public class UIManager : MonoBehaviour
             }
 
             _skillReference[i] = Instantiate(skills[i], _skillSlots[currentSkillSlot].transform.position, Quaternion.identity);
-            _skillReference[i].transform.position = new Vector3(_skillReference[i].transform.position.x, _skillReference[i].transform.position.y, -2);
+            _skillReference[i].transform.position = new Vector3(_skillReference[i].transform.position.x, _skillReference[i].transform.position.y, -1f);
             currentSkillSlot++;
         }
     }
@@ -93,6 +96,8 @@ public class UIManager : MonoBehaviour
             {
                 continue;
             }
+
+            _skillsContainer.SetActive(false);
 
             Destroy(_skillReference[i]);
         }

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private bool _heroTurn = true;
     private bool _attacking = false;
-    [SerializeField] private bool _gameOver = false;
+    private bool _gameOver = false;
     private bool _sceneLoaded = false;
 
     public GameObject[,] tiles;
@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
 
         InitializeHeroes();
 
+        _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
+
     }
 
     public void Update()
@@ -75,10 +77,16 @@ public class GameManager : MonoBehaviour
 
         if (_heroTurn)
         {
+            _effectReference.SetActive(true);
+
             if (_heroManager.heroesAlive[currentHero] != null)
             {
                 _effectReference.transform.position = _heroManager.heroesAlive[currentHero].transform.position;
             }
+        }
+        else
+        {
+            _effectReference.SetActive(false);
         }
 
         if (speedLeft <= 0)
@@ -112,6 +120,10 @@ public class GameManager : MonoBehaviour
         else if (_enemyManager.GetEnemyCount() <= 0)
         {
             _gameOver = true;
+
+            DestroyMoveTiles();
+            _uiManager.HideSkills();
+
 
             for (int i = 0; i < _heroManager.GetHeroCount(); i++)
             {
@@ -233,7 +245,7 @@ public class GameManager : MonoBehaviour
     {
         currentHero = 0;
         _heroTurn = true;
-        _effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
+        //_effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
 
         hsScript = _heroManager.heroesAlive[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();
@@ -474,4 +486,6 @@ public class GameManager : MonoBehaviour
     }
 
     public bool IsSceneLoaded() { return _sceneLoaded; }
+
+    public bool IsGameOver() { return _gameOver; }
 }

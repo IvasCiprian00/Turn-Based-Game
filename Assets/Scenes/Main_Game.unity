@@ -1397,6 +1397,7 @@ MonoBehaviour:
   gmManager: {fileID: 1853569549}
   _nextLevelButton: {fileID: 1831229323}
   _endTurnButton: {fileID: 1196925670}
+  _skillsContainer: {fileID: 208535994}
   _activeTiles: []
   _skillManager: {fileID: 489541310}
   _confirmSkill: {fileID: 1866068225}
@@ -1460,7 +1461,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 519420031}
-  m_PlaneDistance: 1
+  m_PlaneDistance: 9
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1524,7 +1525,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831229323}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1.000155, y: 1.000155, z: 1.000155}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1674,7 +1675,6 @@ MonoBehaviour:
   _enemyManager: {fileID: 0}
   currentEnemy: 0
   enemyScript: {fileID: 0}
-  _gameOver: 0
 --- !u!4 &1853569550
 Transform:
   m_ObjectHideFlags: 0

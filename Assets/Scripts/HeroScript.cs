@@ -62,6 +62,14 @@ public class HeroScript : MonoBehaviour
         }
     }
 
+    public void StopWinAnimation()
+    {
+        if (_animator != null)
+        {
+            _animator.SetTrigger("begin_new_level");
+        }
+    }
+
     public void SetCoords(int x, int y)
     {
         _xPos = x;
