@@ -231,7 +231,7 @@ public class GameManager : MonoBehaviour
     public void StartEnemyTurns()
     {
         DestroyMoveTiles();
-        Destroy(_effectReference);
+        //Destroy(_effectReference);
 
         currentEnemy = 0;
 
