@@ -119,6 +119,11 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+    public void SpawnMeteorTiles()
+    {
+
+    }
+
     public void SetSkillDamage(int damage)
     {
         _skillDamage = damage;

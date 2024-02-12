@@ -33,6 +33,10 @@ public class SkillSelector : MonoBehaviour
                 skManager.SpawnGreatStrikeTiles();
                 skManager.SetSkillDamage(damage);
                 break;
+            case "Meteor(Clone)":
+                skManager.SpawnMeteorTiles();
+                skManager.SetSkillDamage(damage);
+                break;
             default:
                 break;
         }

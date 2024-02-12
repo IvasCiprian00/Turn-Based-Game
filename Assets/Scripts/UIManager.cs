@@ -90,14 +90,14 @@ public class UIManager : MonoBehaviour
 
     public void HideSkills()
     {
+        _skillsContainer.SetActive(false);
+        Debug.Log("YEY");
         for(int i = 0; i < _skillReference.Length; i++)
         {
             if(_skillReference[i] == null)
             {
                 continue;
             }
-
-            _skillsContainer.SetActive(false);
 
             Destroy(_skillReference[i]);
         }

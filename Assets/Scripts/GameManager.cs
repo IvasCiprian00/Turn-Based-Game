@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     {
         if (_gameOver)
         {
+            DestroyMoveTiles();
             _uiManager.DisplayNextLevelButton(true);
             return;
         }

@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
+    enum TargetType
+    {
+        closest,
+        lowestHp
+    }
 
     [SerializeField] private GameManager _gmManager;
     [SerializeField] private EnemyManager _enemyManager;
@@ -20,6 +25,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private int _damage;
     [SerializeField] private int _xPos;
     [SerializeField] private int _yPos;
+    [SerializeField] private TargetType _targetType;
     [SerializeField] private float _waitDuration = 0.2f;
 
     [Serializable]
@@ -41,20 +47,10 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private int minPathLength;
     [SerializeField] private PathCoordinates[] currentPath = new PathCoordinates[50];
     [SerializeField] private PathCoordinates[] shortestPath = new PathCoordinates[50];
-    //private int[,] grid;
     private PathGrid[,] grid;
 
     private int[] dl = { -1, 0, 1, 0 };
     private int[] dc = { 0, 1, 0, -1 };
-
-    /*int[,] grid = {
-            {0, 1, 0, 0, 0},
-            {0, 1, 0, 1, 0},
-            {0, 1, 0, 1, 0},
-            {0, 1, 0, 1, 0},
-            {0, 0, 0, 1, 0}
-    };*/
-
 
     public void Awake()
     {
@@ -90,16 +86,42 @@ public class EnemyScript : MonoBehaviour
     {
         int minDistance = 99;
 
-        for(int i = 0; i < _heroManager.GetHeroCount(); i++)
+        switch (_targetType)
         {
-            HeroScript hsScript = _heroManager.heroesAlive[i].GetComponent<HeroScript>();
-            int distance = Mathf.Abs(_xPos - hsScript.GetXPos()) + Mathf.Abs(_yPos - hsScript.GetYPos());
+            case TargetType.closest:
 
-            if(distance < minDistance)
-            {
-                minDistance = distance;
-                _target = _heroManager.heroesAlive[i];
-            }
+                for (int i = 0; i < _heroManager.GetHeroCount(); i++)
+                {
+                    HeroScript hsScript = _heroManager.heroesAlive[i].GetComponent<HeroScript>();
+                    int distance = Mathf.Abs(_xPos - hsScript.GetXPos()) + Mathf.Abs(_yPos - hsScript.GetYPos());
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        _target = _heroManager.heroesAlive[i];
+                    }
+                }
+
+                break;
+
+            case TargetType.lowestHp:
+
+                int minHp = 99;
+
+                for(int i = 0; i < _heroManager.GetHeroCount(); i++)
+                {
+                    HeroScript hsScript = _heroManager.heroesAlive[i].GetComponent<HeroScript>();
+
+                    if(hsScript.GetHp() < minHp)
+                    {
+                        minHp = hsScript.GetHp();
+                        _target = _heroManager.heroesAlive[i];
+                    }
+                }
+
+                break;
+
+            default: break;
         }
 
         _hsScript = _target.GetComponent<HeroScript>();
@@ -153,11 +175,6 @@ public class EnemyScript : MonoBehaviour
         {
             _xPos = shortestPath[1].x;
             _yPos = shortestPath[1].y;
-        }
-        Debug.Log(".");
-        for(int i = 0; i < minPathLength; i++)
-        {
-            Debug.Log(shortestPath[i].x + " " + shortestPath[i].y);
         }
 
         UpdatePosition(pastXPos, pastYPos);

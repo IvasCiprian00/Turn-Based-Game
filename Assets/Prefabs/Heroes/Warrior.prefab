@@ -154,7 +154,7 @@ MonoBehaviour:
   _xPos: 0
   _yPos: 0
   _animator: {fileID: 4588575230255111520}
-  _hp: 1
+  _hp: 4
   _maxHp: 10
   _damage: 1
   _speed: 1
