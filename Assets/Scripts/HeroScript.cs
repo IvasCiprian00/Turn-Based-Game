@@ -22,10 +22,12 @@ public class HeroScript : MonoBehaviour
     [SerializeField] private int _range;
 
     public GameManager gmManager;
+    public UIManager uiManager;
 
     public void Start()
     {
         gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     public void Heal(int healValue)
@@ -40,6 +42,7 @@ public class HeroScript : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        uiManager.DisplayDamageDealt(gameObject, damage);
         _hp -= damage;
 
         if (_animator != null)

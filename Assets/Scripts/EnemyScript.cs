@@ -15,6 +15,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private GameManager _gmManager;
     [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private HeroManager _heroManager;
+    [SerializeField] private UIManager _uiManager;
     [SerializeField] private GameObject _target;
     [SerializeField] private HeroScript _hsScript;
 
@@ -54,6 +55,7 @@ public class EnemyScript : MonoBehaviour
 
     public void Awake()
     {
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         _enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
         _heroManager = GameObject.Find("Hero Manager").GetComponent<HeroManager>();
@@ -71,6 +73,15 @@ public class EnemyScript : MonoBehaviour
 
     IEnumerator TakeTurn()
     {
+        //Find target
+        //Attack if it can
+        //Otherwise move towards target
+        //Attack if it can
+        //Move again if it can
+        //While(attacksLeft != 0 && speedLeft != 0)
+        //try to attack or move
+        //decrease attacks left or speed left depending on action taken
+        //end turn
         FindTarget();
 
         yield return new WaitForSeconds(_waitDuration);
@@ -286,8 +297,9 @@ public class EnemyScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _hp -= damage;
+        _uiManager.DisplayDamageDealt(gameObject, damage);
 
-        if(_hp <= 0)
+        if (_hp <= 0)
         {
             _gmManager.EnemyDeath(gameObject, _xPos, _yPos);
             Destroy(gameObject);

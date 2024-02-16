@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _endTurnButton;
     [SerializeField] private GameObject _skillsContainer;
     [SerializeField] private GameObject[] _activeTiles;
+    [SerializeField] private TextMeshProUGUI _damageDealt;
 
     [Header("Skills")]
     [SerializeField] private SkillManager _skillManager;
@@ -36,6 +37,21 @@ public class UIManager : MonoBehaviour
         {
             HideHeroStats();
         }
+    }
+
+    public void DisplayDamageDealt(GameObject target, int damage)
+    {
+        StopCoroutine(HideDamageDealt());
+        _damageDealt.text = "-" + damage.ToString();
+        _damageDealt.enabled = true;
+        _damageDealt.transform.position = target.transform.position;
+        StartCoroutine(HideDamageDealt());
+    }
+
+    IEnumerator HideDamageDealt()
+    {
+        yield return new WaitForSeconds(1f);
+        _damageDealt.enabled = false;
     }
 
     public void DisplayNextLevelButton(bool isActive)
@@ -83,7 +99,7 @@ public class UIManager : MonoBehaviour
             }
 
             _skillReference[i] = Instantiate(skills[i], _skillSlots[currentSkillSlot].transform.position, Quaternion.identity);
-            _skillReference[i].transform.position = new Vector3(_skillReference[i].transform.position.x, _skillReference[i].transform.position.y, -1f);
+            _skillReference[i].transform.position = new Vector3(_skillReference[i].transform.position.x, _skillReference[i].transform.position.y, -6f);
             currentSkillSlot++;
         }
     }
@@ -91,7 +107,7 @@ public class UIManager : MonoBehaviour
     public void HideSkills()
     {
         _skillsContainer.SetActive(false);
-        Debug.Log("YEY");
+
         for(int i = 0; i < _skillReference.Length; i++)
         {
             if(_skillReference[i] == null)
