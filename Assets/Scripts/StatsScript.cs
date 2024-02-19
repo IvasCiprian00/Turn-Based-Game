@@ -42,16 +42,17 @@ public class StatsScript : MonoBehaviour
 
     public void SetHpColor()
     {
-        if(_hp >= 7/10 * _maxHp)
+        if(_hp >= (float) 7 / 10 * _maxHp)
         {
+            gameObject.GetComponent<TextMeshProUGUI>().color = new Color(0, 255, 0, 255);
             //color is green
         }
-        if(_hp < 7/10 * _maxHp && _hp >= 3/10 * _maxHp)
+        if(_hp < (float) 7 / 10 * _maxHp && _hp >= (float) 3 / 10 * _maxHp)
         {
             //color is yellow
-            gameObject.GetComponent<TextMeshProUGUI>().color = new Color(15, 98, 230, 255);
+            gameObject.GetComponent<TextMeshProUGUI>().color = new Color(255, 255, 0, 255);
         }
-        if(_hp < 3/10 * _maxHp )
+        if(_hp < (float) 3 / 10 * _maxHp)
         {
             //color is red
             gameObject.GetComponent<TextMeshProUGUI>().color = new Color(255, 0, 0, 255);
