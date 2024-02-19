@@ -105,6 +105,9 @@ public class GameManager : MonoBehaviour
         InitializeEnemies();
 
         StartHeroTurns();
+        GameObject.Find("Stats Displayer").GetComponent<StatsDisplayer>().SetHeroManager();
+        GameObject.Find("Stats Displayer").GetComponent<StatsDisplayer>().SetEnemyManager();
+        GameObject.Find("Stats Displayer").GetComponent<StatsDisplayer>().GetActiveChars();
 
         _sceneLoaded = true;
     }

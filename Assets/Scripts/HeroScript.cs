@@ -85,6 +85,7 @@ public class HeroScript : MonoBehaviour
     public int GetDamage() { return _damage; }
     public int GetSpeed() { return _speed;}
     public int GetHp() { return _hp;}
+    public int GetMaxHp() {  return _maxHp;}
     public string GetAttackType() { return _attackType;}
     public int GetRange() { return _range;}
     public int GetNumberOfAttacks() { return _nrOfAttacks; }

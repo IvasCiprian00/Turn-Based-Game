@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     public void DisplayDamageDealt(GameObject target, int damage)
     {
-        TextMeshProUGUI reference = Instantiate(_damageDealt, target.transform.position - new Vector3(0, 0, 1), Quaternion.identity, GameObject.Find("Canvas").transform);
+        TextMeshProUGUI reference = Instantiate(_damageDealt, target.transform.position, Quaternion.identity, GameObject.Find("Canvas").transform);
         reference.text = "-" + damage.ToString();
     }
 

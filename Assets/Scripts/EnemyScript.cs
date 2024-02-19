@@ -23,6 +23,7 @@ public class EnemyScript : MonoBehaviour
 
     [Header("Enemy Stats")]
     [SerializeField] private int _hp;
+    [SerializeField] private int _maxHp;
     [SerializeField] private int _damage;
     [SerializeField] private int _xPos;
     [SerializeField] private int _yPos;
@@ -321,4 +322,7 @@ public class EnemyScript : MonoBehaviour
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, z);
     }
+
+    public int GetHp() { return _hp; }
+    public int GetMaxHp() { return _maxHp; }
 }
