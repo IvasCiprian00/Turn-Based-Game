@@ -41,17 +41,8 @@ public class UIManager : MonoBehaviour
 
     public void DisplayDamageDealt(GameObject target, int damage)
     {
-        StopCoroutine(HideDamageDealt());
-        _damageDealt.text = "-" + damage.ToString();
-        _damageDealt.enabled = true;
-        _damageDealt.transform.position = target.transform.position;
-        StartCoroutine(HideDamageDealt());
-    }
-
-    IEnumerator HideDamageDealt()
-    {
-        yield return new WaitForSeconds(1f);
-        _damageDealt.enabled = false;
+        TextMeshProUGUI reference = Instantiate(_damageDealt, target.transform.position - new Vector3(0, 0, 1), Quaternion.identity, GameObject.Find("Canvas").transform);
+        reference.text = "-" + damage.ToString();
     }
 
     public void DisplayNextLevelButton(bool isActive)
