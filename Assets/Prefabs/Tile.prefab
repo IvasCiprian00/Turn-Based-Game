@@ -144,3 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gmManager: {fileID: 0}
+  _tileSet:
+  - {fileID: 1588002361, guid: 2ed654eca5db54240bf6aa0c7ba0814d, type: 3}
+  - {fileID: 1367828720, guid: 2ed654eca5db54240bf6aa0c7ba0814d, type: 3}
+  - {fileID: 271008589, guid: 2ed654eca5db54240bf6aa0c7ba0814d, type: 3}
+  - {fileID: 1573408711, guid: 2ed654eca5db54240bf6aa0c7ba0814d, type: 3}
+  - {fileID: -1906825949, guid: 2ed654eca5db54240bf6aa0c7ba0814d, type: 3}

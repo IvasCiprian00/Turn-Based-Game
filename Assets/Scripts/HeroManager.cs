@@ -36,14 +36,9 @@ public class HeroManager : MonoBehaviour
 
             heroesAlive[i] = Instantiate(heroList[i].hero);
             heroesAlive[i].transform.position = _gameManager.GetTile(linePos, colPos).transform.position;
-            heroesAlive[i].transform.position -= new Vector3(0, 0, 1);
+            _gameManager.SetZPos(heroesAlive[i], colPos - 10);
             _gameManager.gameBoard[linePos, colPos] = heroesAlive[i];
             heroesAlive[i].GetComponent<HeroScript>().SetCoords(linePos, colPos);
-            /*heroList[i].hero = Instantiate(heroList[i].hero);
-            heroList[i].hero.transform.position = _gameManager.GetTile(linePos, colPos).transform.position;
-            heroList[i].hero.transform.position -= new Vector3(0, 0, 1);
-            _gameManager.gameBoard[linePos, colPos] = heroList[i].hero;
-            heroList[i].hero.GetComponent<HeroScript>().SetCoords(linePos, colPos);*/
         }
     }
 

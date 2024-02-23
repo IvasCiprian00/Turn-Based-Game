@@ -58,6 +58,7 @@ MonoBehaviour:
   _attackType: ranged
   _range: 2
   gmManager: {fileID: 0}
+  uiManager: {fileID: 0}
 --- !u!1 &2493559740348191155
 GameObject:
   m_ObjectHideFlags: 0
