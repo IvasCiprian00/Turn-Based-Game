@@ -36,7 +36,7 @@ public class HeroManager : MonoBehaviour
 
             heroesAlive[i] = Instantiate(heroList[i].hero);
             heroesAlive[i].transform.position = _gameManager.GetTile(linePos, colPos).transform.position;
-            _gameManager.SetZPos(heroesAlive[i], colPos - 10);
+            //_gameManager.SetZPos(heroesAlive[i], colPos - 10);
             _gameManager.gameBoard[linePos, colPos] = heroesAlive[i];
             heroesAlive[i].GetComponent<HeroScript>().SetCoords(linePos, colPos);
         }

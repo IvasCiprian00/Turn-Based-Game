@@ -14,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Chars
+  - 
   - 
   - 
   - 
@@ -44,9 +44,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Heroes
+  - name: Background
     uniqueID: 1387847269
     locked: 0
   - name: UI
+    uniqueID: 2889161405
+    locked: 0
+  - name: Move Tiles
+    uniqueID: 3739324543
+    locked: 0
+  - name: Characters
     uniqueID: 3889091963
     locked: 0

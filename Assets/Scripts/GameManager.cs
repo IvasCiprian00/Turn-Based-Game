@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
 
             for (int j = 0; j < sizeY; j++)
             {
-                tiles[i, j] = Instantiate(_tile, new Vector3(xPos, yPos, -1), Quaternion.identity, GameObject.Find("Tile Container").transform);
+                tiles[i, j] = Instantiate(_tile, new Vector3(xPos, yPos, 0), Quaternion.identity, GameObject.Find("Tile Container").transform);
                 tiles[i, j].GetComponent<TileScript>().SetCoords(i, j);
 
                 xPos += positionIncrement;
@@ -487,10 +487,10 @@ public class GameManager : MonoBehaviour
         return tiles[x, y];
     }
 
-    public void SetZPos(GameObject thing, int z)
+    /*public void SetZPos(GameObject thing, int z)
     {
         thing.transform.position = new Vector3(thing.transform.position.x, thing.transform.position.y, z);
-    }
+    }*/
 
     public bool IsSceneLoaded() { return _sceneLoaded; }
 

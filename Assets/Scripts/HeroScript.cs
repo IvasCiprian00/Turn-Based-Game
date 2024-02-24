@@ -44,7 +44,7 @@ public class HeroScript : MonoBehaviour
 
             if (Vector3.Distance(transform.position, _targetTile.transform.position) < 0.001f)
             {
-                transform.position = new Vector3(_targetTile.transform.position.x, _targetTile.transform.position.y, -5f);
+                transform.position = _targetTile.transform.position;
                 _isMoving = false;
             }
         }
@@ -101,9 +101,6 @@ public class HeroScript : MonoBehaviour
 
         _targetTile = gmManager.tiles[x, y];
         _isMoving = true;
-        //transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, -5f);
-        //_camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _targetZoom, Time.deltaTime * _zoomLerpSpeed);
-        //transform.position = Mathf.Lerp(transform.position, tile.transform.position, Time.deltaTime * 10f);
 
     }
 
