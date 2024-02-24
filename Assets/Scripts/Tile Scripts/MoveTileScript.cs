@@ -47,9 +47,8 @@ public class MoveTileScript : MonoBehaviour
 
         gmManager.gameBoard[pastXPos, pastYPos] = null;
 
-        heroManager.heroesAlive[gmManager.currentHero].transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 2f);
+        hsScript.MoveTo(gameObject);
 
-        hsScript.SetCoords(_xPos, _yPos);
         gmManager.gameBoard[_xPos, _yPos] = heroManager.heroesAlive[gmManager.currentHero];
         gmManager.GenerateMoveTiles();
     }
@@ -68,4 +67,7 @@ public class MoveTileScript : MonoBehaviour
 
         _attackTile = attacking;
     }
+
+    public int GetXPos() { return _xPos; }
+    public int GetYPos() { return _yPos; }
 }

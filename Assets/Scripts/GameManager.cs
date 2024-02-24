@@ -235,7 +235,6 @@ public class GameManager : MonoBehaviour
     public void StartEnemyTurns()
     {
         DestroyMoveTiles();
-        //Destroy(_effectReference);
 
         currentEnemy = 0;
 
@@ -249,7 +248,6 @@ public class GameManager : MonoBehaviour
     {
         currentHero = 0;
         _heroTurn = true;
-        //_effectReference = Instantiate(_selectedEffect, Vector3.zero, Quaternion.identity);
 
         hsScript = _heroManager.heroesAlive[currentHero].GetComponent<HeroScript>();
         speedLeft = hsScript.GetSpeed();

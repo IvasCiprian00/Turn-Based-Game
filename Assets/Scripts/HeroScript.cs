@@ -1,7 +1,9 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class HeroScript : MonoBehaviour
 {
@@ -24,10 +26,28 @@ public class HeroScript : MonoBehaviour
     public GameManager gmManager;
     public UIManager uiManager;
 
+    private bool _isMoving;
+    private GameObject _targetTile;
+
     public void Start()
     {
         gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+    }
+
+    public void Update()
+    {
+        if (_isMoving)
+        {
+            var step = 10 * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, _targetTile.transform.position, step);
+
+            if (Vector3.Distance(transform.position, _targetTile.transform.position) < 0.001f)
+            {
+                transform.position = new Vector3(_targetTile.transform.position.x, _targetTile.transform.position.y, -5f);
+                _isMoving = false;
+            }
+        }
     }
 
     public void Heal(int healValue)
@@ -71,6 +91,20 @@ public class HeroScript : MonoBehaviour
         {
             _animator.SetTrigger("begin_new_level");
         }
+    }
+
+    public void MoveTo(GameObject tile)
+    {
+        int x = tile.GetComponent<MoveTileScript>().GetXPos();
+        int y = tile.GetComponent<MoveTileScript>().GetYPos();
+        SetCoords(x, y);
+
+        _targetTile = gmManager.tiles[x, y];
+        _isMoving = true;
+        //transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, -5f);
+        //_camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _targetZoom, Time.deltaTime * _zoomLerpSpeed);
+        //transform.position = Mathf.Lerp(transform.position, tile.transform.position, Time.deltaTime * 10f);
+
     }
 
     public void SetCoords(int x, int y)

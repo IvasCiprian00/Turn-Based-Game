@@ -23,5 +23,10 @@ public class CameraController : MonoBehaviour
         _targetZoom -= scrollData * _zoomFactor;
         _targetZoom = Mathf.Clamp(_targetZoom, 3f, 8);
         _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _targetZoom, Time.deltaTime * _zoomLerpSpeed);
+
+        if (Input.GetMouseButton(0))
+        {
+            //Debug.Log("YEY");
+        }
     }
 }
