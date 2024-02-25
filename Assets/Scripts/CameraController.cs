@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
     private float _targetZoom;
     private float _zoomFactor = 3f;
     private float _zoomLerpSpeed = 10f;
+    private float _cameraMoveSpeed = 0.3f;
 
     private void Start()
     {
@@ -21,12 +22,20 @@ public class CameraController : MonoBehaviour
         scrollData = Input.GetAxis("Mouse ScrollWheel");
 
         _targetZoom -= scrollData * _zoomFactor;
-        _targetZoom = Mathf.Clamp(_targetZoom, 3f, 8);
+        _targetZoom = Mathf.Clamp(_targetZoom, 3f, 8f);
         _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _targetZoom, Time.deltaTime * _zoomLerpSpeed);
+
+        var pos = transform.position;
+        pos.x = Mathf.Clamp(transform.position.x, -1.5f, 1.5f);
+        pos.y = Mathf.Clamp(transform.position.y, -1f, 1f);
+        transform.position = pos;
 
         if (Input.GetMouseButton(0))
         {
-            //Debug.Log("YEY");
+            float xSpeed = Input.GetAxis("Mouse X");
+            float ySpeed = Input.GetAxis("Mouse Y");
+
+            transform.position -= new Vector3(xSpeed, ySpeed, 0) * _cameraMoveSpeed;
         }
     }
 }

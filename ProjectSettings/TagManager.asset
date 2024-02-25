@@ -47,11 +47,14 @@ TagManager:
   - name: Background
     uniqueID: 1387847269
     locked: 0
-  - name: UI
-    uniqueID: 2889161405
+  - name: Tiles
+    uniqueID: 2327541645
     locked: 0
   - name: Move Tiles
     uniqueID: 3739324543
+    locked: 0
+  - name: UI
+    uniqueID: 2889161405
     locked: 0
   - name: Characters
     uniqueID: 3889091963
