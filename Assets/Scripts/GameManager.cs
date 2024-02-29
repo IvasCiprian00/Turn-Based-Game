@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
     public GameObject[,] tiles;
     public GameObject[,] gameBoard;
 
+    int[] lineDir = { -1, 0, 1, 0 };
+    int[] colDir = { 0, 1, 0, -1 };
+
     public void Awake()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -288,10 +291,10 @@ public class GameManager : MonoBehaviour
         switch (mvmt)
         {
             case "basic":
-                SpawnBasicTiles(speedLeft);
+                SpawnBasicTiles(speedLeft, hsScript.GetXPos(), hsScript.GetYPos());
                 break;
             case "fast":
-                SpawnBasicTiles(2);
+                SpawnBasicTiles(speedLeft, hsScript.GetXPos(), hsScript.GetYPos());
                 break;
             case "teleport":
                 SpawnTeleportTiles();
@@ -365,36 +368,28 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    public void SpawnBasicTiles(int speed)
+
+    public void SpawnBasicTiles(int speed, int x, int y)
     {
-        int firstLine = hsScript.GetXPos() - speed;
-        int firstCol = hsScript.GetYPos() - speed;
-
-        int lastLine = hsScript.GetXPos() + speed;
-        int lastCol = hsScript.GetYPos() + speed;
-
-        for (int i = firstLine; i <= lastLine; i++)
+        if(speed != 0)
         {
-            for(int j = firstCol; j <= lastCol; j++)
+            for(int  i = 0; i < 4; i++)
             {
-                _attacking = false;
+                int nextX = x + lineDir[i];
+                int nextY = y + colDir[i];
 
-                if(!PositionIsValid(i, j))
+                if(!PositionIsValid(nextX, nextY))
                 {
                     continue;
                 }
 
-                if(Mathf.Abs(hsScript.GetXPos() - i) + Mathf.Abs(hsScript.GetYPos() - j) > speed)
+                if (gameBoard[nextX, nextY] != null)
                 {
                     continue;
                 }
 
-                if (gameBoard[i, j] != null)
-                {
-                    continue;
-                }
-
-                SpawnTile(_attacking, i, j);
+                SpawnTile(false, nextX, nextY);
+                SpawnBasicTiles(speed - 1, nextX, nextY);
             }
         }
     }

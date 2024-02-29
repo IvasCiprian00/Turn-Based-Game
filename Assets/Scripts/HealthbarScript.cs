@@ -53,12 +53,12 @@ public class HealthbarScript : MonoBehaviour
 
         if (hpPercent <= 0.5)
         {
-            redColor = 1 - 1 * hpPercent + 0.3f;
+            redColor = 1 - hpPercent + 0.3f;
             greenColor = 1 * hpPercent;
         }
         else
         {
-            redColor = 1 - 1 * hpPercent;
+            redColor = 1 - hpPercent + 0.3f;
             greenColor = 1 * hpPercent + 0.1f;
         }
         fill.color = new Color(redColor, greenColor, 0, 255);

@@ -81,6 +81,7 @@ public class EnemyScript : MonoBehaviour
             {
                 transform.position = _targetTile.transform.position;
                 _isMoving = false;
+                //Camera.main.transform.parent = null;
             }
         }
     }
@@ -192,6 +193,8 @@ public class EnemyScript : MonoBehaviour
 
     public void MoveTowards()
     {
+        //Camera.main.transform.parent = transform;
+        //Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
         int pastXPos = _xPos;
         int pastYPos = _yPos;
 
