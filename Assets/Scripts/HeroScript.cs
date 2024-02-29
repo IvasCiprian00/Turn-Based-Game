@@ -31,6 +31,7 @@ public class HeroScript : MonoBehaviour
 
     public void Start()
     {
+        _hp = _maxHp;
         gmManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }

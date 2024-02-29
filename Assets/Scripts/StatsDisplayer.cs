@@ -42,7 +42,7 @@ public class StatsDisplayer : MonoBehaviour
     public void AsignStats(GameObject character)
     {
         GameObject reference = Instantiate(_stats, character.transform.position, Quaternion.identity, gameObject.transform);
-        reference.GetComponent<StatsScript>().SetTarget(character);
+        reference.GetComponent<HealthbarScript>().SetTarget(character);
     }
 
     public void SetHeroManager()

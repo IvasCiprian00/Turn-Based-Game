@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class StatsScript : MonoBehaviour
+public class HealthbarScript : MonoBehaviour
 {
     private int _hp;
     private int _maxHp;
     private GameObject _target;
+
+    public Slider slider;
+    public Image fill;
+
+    public float redColor;
+    public float greenColor;
 
     public void Update()
     {
@@ -37,26 +44,24 @@ public class StatsScript : MonoBehaviour
             _maxHp = _target.GetComponent<HeroScript>().GetMaxHp();
         }
 
-        gameObject.GetComponent<TextMeshProUGUI>().text = _hp + " / " + _maxHp;
+        slider.value = (float) _hp / _maxHp;
     }
 
     public void SetHpColor()
     {
-        if(_hp >= (float) 7 / 10 * _maxHp)
+        float hpPercent = (float)_hp / _maxHp;
+
+        if (hpPercent <= 0.5)
         {
-            gameObject.GetComponent<TextMeshProUGUI>().color = new Color(0, 255, 0, 255);
-            //color is green
+            redColor = 1 - 1 * hpPercent + 0.3f;
+            greenColor = 1 * hpPercent;
         }
-        if(_hp < (float) 7 / 10 * _maxHp && _hp >= (float) 3 / 10 * _maxHp)
+        else
         {
-            //color is yellow
-            gameObject.GetComponent<TextMeshProUGUI>().color = new Color(255, 255, 0, 255);
+            redColor = 1 - 1 * hpPercent;
+            greenColor = 1 * hpPercent + 0.1f;
         }
-        if(_hp < (float) 3 / 10 * _maxHp)
-        {
-            //color is red
-            gameObject.GetComponent<TextMeshProUGUI>().color = new Color(255, 0, 0, 255);
-        }
+        fill.color = new Color(redColor, greenColor, 0, 255);
     }
 
     public void SetTarget(GameObject target)

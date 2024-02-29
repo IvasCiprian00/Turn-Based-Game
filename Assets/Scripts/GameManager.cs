@@ -487,11 +487,6 @@ public class GameManager : MonoBehaviour
         return tiles[x, y];
     }
 
-    /*public void SetZPos(GameObject thing, int z)
-    {
-        thing.transform.position = new Vector3(thing.transform.position.x, thing.transform.position.y, z);
-    }*/
-
     public bool IsSceneLoaded() { return _sceneLoaded; }
 
     public bool IsGameOver() { return _gameOver; }

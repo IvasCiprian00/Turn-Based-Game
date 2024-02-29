@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df94763dd29bcd42bc9bd04f44d7dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 4931829021127465319, guid: 4fb828d1cd9b5e247bfc0d86da1b3d8d, type: 3}
+  _stats: {fileID: 5521041680400699150, guid: 54a4ce711653795458130c1dead47deb, type: 3}
   _activeChars: []
   _hpLeft: []
 --- !u!114 &594776962
@@ -914,7 +914,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 519420031}
-  m_PlaneDistance: 5
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

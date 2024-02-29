@@ -30,6 +30,10 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private TargetType _targetType;
     [SerializeField] private float _waitDuration = 0.2f;
 
+
+    private bool _isMoving;
+    private GameObject _targetTile;
+
     [Serializable]
     public struct PathCoordinates
     {
@@ -64,7 +68,21 @@ public class EnemyScript : MonoBehaviour
 
     public void Start()
     {
-        SetZPos(-3);
+        _hp = _maxHp;
+    }
+    public void Update()
+    {
+        if (_isMoving)
+        {
+            var step = 10 * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, _targetTile.transform.position, step);
+
+            if (Vector3.Distance(transform.position, _targetTile.transform.position) < 0.001f)
+            {
+                transform.position = _targetTile.transform.position;
+                _isMoving = false;
+            }
+        }
     }
 
     public void StartTurn()
@@ -194,11 +212,13 @@ public class EnemyScript : MonoBehaviour
 
     public void UpdatePosition(int x, int y)
     {
-        transform.position = _gmManager.tiles[_xPos, _yPos].transform.position;
-        SetZPos(-3);
+        //transform.position = _gmManager.tiles[_xPos, _yPos].transform.position;
 
         _gmManager.gameBoard[x, y] = null;
         _gmManager.gameBoard[_xPos, _yPos] = gameObject;
+
+        _targetTile = _gmManager.tiles[_xPos, _yPos];
+        _isMoving = true;
     }
 
 
